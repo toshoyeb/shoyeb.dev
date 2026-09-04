@@ -53,6 +53,34 @@ const ogImage = new URL("/og.png", Astro.site ?? "https://shoyeb.dev").href;
     <slot />
 
     <script is:inline>
+      // Arriving from another page at /#section, the browser starts a smooth
+      // scroll while the page is still settling and never re-targets it, so it
+      // stops short — measured at 478px short of #skills. Land it exactly once
+      // layout is final, unless the visitor has already taken over the scroll.
+      (() => {
+        const id = decodeURIComponent(location.hash.slice(1));
+        if (!id) return;
+
+        let takenOver = false;
+        const cede = () => { takenOver = true; };
+        for (const ev of ["wheel", "touchstart", "keydown"])
+          addEventListener(ev, cede, { once: true, passive: true });
+
+        addEventListener("load", () =>
+          requestAnimationFrame(() => {
+            const el = document.getElementById(id);
+            if (takenOver || !el) return;
+            const root = document.documentElement;
+            const previous = root.style.scrollBehavior;
+            root.style.scrollBehavior = "auto";
+            el.scrollIntoView();
+            root.style.scrollBehavior = previous;
+          }),
+        );
+      })();
+    </script>
+
+    <script is:inline>
       // Reveal on first intersection only, then stop observing that element.
       (() => {
         const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
