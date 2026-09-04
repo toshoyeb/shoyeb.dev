@@ -1,0 +1,86 @@
+---
+const issue = "https://github.com/getsentry/sentry-react-native/issues/6630";
+const release = "https://github.com/getsentry/sentry-react-native/releases/tag/8.25.0";
+---
+
+<section id="upstream" class="upstream">
+  <div class="container">
+    <p class="label">Upstream</p>
+    <h2>Bugs I found in production, fixed at the source</h2>
+
+    <article>
+      <h3>
+        <a href={issue} rel="noopener">sentry-react-native #6630</a>
+      </h3>
+
+      <p>
+        Sentry was silently dropping every log and span on iOS with React Native 0.86 and
+        above, while still reporting HTTP&nbsp;200 &mdash; so error reporting looked healthy
+        and collected nothing. I traced it to an unreliable
+        <code>performance.timeOrigin</code>, reported it with a reproduction, and Sentry
+        shipped the fix six days later.
+      </p>
+
+      <p class="shipped-in">
+        Fixed in <a href={release} rel="noopener">8.25.0</a>
+        <span class="quote">
+          &ldquo;Prevent silently dropped logs and spans on iOS with React Native &ge; 0.86
+          caused by an unreliable <code>performance.timeOrigin</code>&rdquo;
+        </span>
+      </p>
+    </article>
+  </div>
+</section>
+
+<style>
+  .upstream {
+    padding-block: var(--section-gap);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  h2 { margin-block: 0.75rem 2.5rem; max-width: 30ch; }
+
+  article {
+    display: grid;
+    gap: 1.1rem;
+    padding: 1.75rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+    border-radius: 2px;
+    box-shadow: var(--shadow);
+  }
+
+  h3 a {
+    font-family: var(--font-mono);
+    font-size: var(--step-1);
+    text-decoration: none;
+  }
+  h3 a:hover { text-decoration: underline; }
+
+  article > p { color: var(--muted); }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    padding: 0.1em 0.35em;
+    background: var(--sunk);
+    border-radius: 3px;
+    color: var(--ink);
+  }
+
+  .shipped-in {
+    display: grid;
+    gap: 0.5rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--rule);
+    font-size: var(--step-0);
+  }
+
+  .quote {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    line-height: 1.55;
+    color: var(--muted);
+  }
+</style>
