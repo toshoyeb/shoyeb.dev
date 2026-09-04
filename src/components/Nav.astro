@@ -1,12 +1,13 @@
 ---
 import ThemeToggle from "./ThemeToggle.astro";
 
-const links = [
+/* The first four scroll the page you are on; Writing loads a different page.
+   It is set apart rather than styled as a fifth jump link. */
+const sections = [
   { href: "/#about", label: "About" },
   { href: "/#services", label: "What I do" },
   { href: "/#shipped", label: "Work" },
   { href: "/#skills", label: "Skills" },
-  { href: "/writing", label: "Writing" },
 ];
 ---
 
@@ -19,9 +20,10 @@ const links = [
 
     <nav aria-label="Sections">
       <ul>
-        {links.map((l) => (
+        {sections.map((l) => (
           <li><a href={l.href}>{l.label}</a></li>
         ))}
+        <li class="elsewhere"><a href="/writing">Writing</a></li>
       </ul>
     </nav>
 
@@ -80,8 +82,16 @@ const links = [
 
   nav ul {
     display: flex;
+    align-items: center;
     gap: 2rem;
   }
+
+  /* a rule, not a different shape: this one leaves the page */
+  .elsewhere {
+    padding-left: 2rem;
+    border-left: 1px solid var(--rule);
+  }
+  .elsewhere a { color: var(--ink); }
 
   nav a {
     position: relative;
