@@ -26,6 +26,8 @@ const fmt = new Intl.DateTimeFormat("en-GB", {
   title={`${post.data.title} — Shoyeb Akhtar`}
   description={post.data.description}
   path={`/writing/${post.id}`}
+  type="article"
+  published={post.data.date}
 >
   <Nav />
 

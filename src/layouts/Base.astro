@@ -9,11 +9,47 @@ interface Props {
   description: string;
   /** Path only, e.g. "/writing/kuttl". Joined onto the site origin. */
   path?: string;
+  /** "article" for posts, so shares render as writing rather than a home page. */
+  type?: "website" | "article";
+  published?: Date;
+  /** Form outcome pages: reachable, but not search results. */
+  noindex?: boolean;
 }
 
-const { title, description, path = "/" } = Astro.props;
-const canonical = new URL(path, Astro.site ?? "https://shoyeb.dev").href;
-const ogImage = new URL("/og.png", Astro.site ?? "https://shoyeb.dev").href;
+const { title, description, path = "/", type = "website", published, noindex = false } = Astro.props;
+const origin = Astro.site ?? new URL("https://shoyeb.dev");
+const canonical = new URL(path, origin).href;
+const ogImage = new URL("/og.png", origin).href;
+
+/* Person schema on the home page only — one entity, not one per page. The job
+   this does is connecting the site to the name a prospect will search for, and
+   to the GitHub and LinkedIn profiles they will find alongside it. */
+const person = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Shoyeb Akhtar",
+  url: origin.href,
+  image: new URL("/img/shoyeb.jpg", origin).href,
+  jobTitle: "Mobile Product Engineer",
+  description:
+    "React Native and Expo engineer. Builds mobile apps, ships them to the App Store and Google Play, and keeps them running in production.",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Bengaluru",
+    addressCountry: "IN",
+  },
+  email: "mailto:hello@shoyeb.dev",
+  sameAs: ["https://github.com/toshoyeb", "https://www.linkedin.com/in/shoyeb-akhtar/"],
+  knowsAbout: [
+    "React Native",
+    "Expo",
+    "TypeScript",
+    "iOS development",
+    "Android development",
+    "App Store and Google Play releases",
+    "Mobile crash and performance debugging",
+  ],
+};
 ---
 
 <!doctype html>
@@ -24,17 +60,27 @@ const ogImage = new URL("/og.png", Astro.site ?? "https://shoyeb.dev").href;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#0f6e63" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#131311" media="(prefers-color-scheme: dark)" />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={type} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="shoyeb.dev — I build mobile apps, ship them, and keep them alive." />
+    <meta property="og:site_name" content="shoyeb.dev" />
+    {published && <meta property="article:published_time" content={published.toISOString()} />}
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
+    {path === "/" && (
+      <script type="application/ld+json" set:html={JSON.stringify(person)} is:inline />
+    )}
     <script is:inline>
       // Runs before paint: no flash of the wrong theme on load.
       try {
