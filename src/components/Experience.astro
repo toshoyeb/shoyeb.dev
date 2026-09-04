@@ -1,0 +1,104 @@
+---
+/* Deliberately terse — the Work section already tells these stories.
+   This exists so the page states dates and tenure, which the GitHub README does not. */
+const roles = [
+  {
+    period: "Jul 2025 — present",
+    org: "Range",
+    title: "Mobile Product Engineer",
+    note: "RangeNow, iOS and Android",
+  },
+  {
+    period: "Dec 2023 — May 2025",
+    org: "kuttl.in",
+    title: "Full Stack Developer, Frontend",
+    note: "Owned the mobile frontend",
+  },
+  {
+    period: "Oct 2023 — Nov 2023",
+    org: "kuttl.in",
+    title: "Software Developer Intern",
+    note: "Founding team",
+  },
+];
+---
+
+<section id="experience" class="experience">
+  <div class="container">
+    <p class="label">Experience</p>
+    <h2>Where I&rsquo;ve done it</h2>
+
+    <ul>
+      {roles.map((r) => (
+        <li>
+          <p class="period">{r.period}</p>
+          <div>
+            <h3>{r.title}<span class="org">{r.org}</span></h3>
+            <p class="note">{r.note}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+
+    <p class="education">Engineering, Jamia Millia Islamia, New Delhi.</p>
+  </div>
+</section>
+
+<style>
+  .experience {
+    padding-block: var(--section-gap);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  h2 { margin-block: 0.75rem 2.5rem; }
+
+  ul { display: grid; }
+
+  li {
+    display: grid;
+    gap: 0.35rem 2.5rem;
+    padding-block: 1.4rem;
+    border-top: 1px solid var(--rule);
+  }
+  li:last-child { border-bottom: 1px solid var(--rule); }
+
+  @media (min-width: 44rem) {
+    li {
+      grid-template-columns: minmax(0, 13rem) minmax(0, 1fr);
+      align-items: baseline;
+    }
+  }
+
+  .period {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+
+  h3 {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.6rem;
+    font-size: var(--step-1);
+  }
+
+  .org {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .note {
+    margin-top: 0.2rem;
+    font-size: var(--step-0);
+    color: var(--muted);
+  }
+
+  .education {
+    margin-top: 1.6rem;
+    font-size: var(--step-0);
+    color: var(--muted);
+  }
+</style>
