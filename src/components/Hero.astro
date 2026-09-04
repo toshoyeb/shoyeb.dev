@@ -1,0 +1,88 @@
+---
+const stores = [
+  { label: "App Store", href: "https://apps.apple.com/in/app/rangenow-ev-charging/id6759698887" },
+  { label: "Google Play", href: "https://play.google.com/store/apps/details?id=now.range.app" },
+];
+---
+
+<section class="hero">
+  <div class="container">
+    <p class="label">Mobile Product Engineer &middot; Bengaluru, UTC +5:30</p>
+
+    <h1>I build mobile apps, ship them to the stores, and keep them alive.</h1>
+
+    <p class="lede">
+      React Native and Expo, across iOS and Android. Two startups, two apps built from an
+      empty repo &mdash; both shipped, and one live in production right now.
+    </p>
+
+    <div class="actions">
+      <a class="primary" href="#contact">Let&rsquo;s talk</a>
+      <a class="secondary" href="#shipped">See what I&rsquo;ve shipped</a>
+    </div>
+
+    <p class="live">
+      Live today:
+      {stores.map((s, i) => (
+        <>
+          {i > 0 && <span aria-hidden="true"> &middot; </span>}
+          <a href={s.href} rel="noopener">{s.label}</a>
+        </>
+      ))}
+    </p>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: clamp(3.5rem, 8vw, 6.5rem) var(--section-gap);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  h1 {
+    margin-block: 1.25rem 1.5rem;
+    max-width: 22ch;
+  }
+
+  .lede { max-width: 54ch; }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2.25rem;
+  }
+
+  .actions a {
+    padding: 0.7rem 1.35rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: var(--step-1);
+    transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+  }
+
+  .primary {
+    background: var(--accent);
+    color: var(--on-accent);
+    border: 1px solid var(--accent);
+  }
+  .primary:hover {
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+    color: var(--on-accent);
+  }
+
+  .secondary {
+    border: 1px solid var(--rule);
+    color: var(--ink);
+  }
+  .secondary:hover { border-color: var(--ink); color: var(--ink); }
+
+  .live {
+    margin-top: 1.75rem;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+</style>

@@ -1,0 +1,83 @@
+---
+const links = [
+  { href: "#shipped", label: "Work" },
+  { href: "#services", label: "What I do" },
+  { href: "/writing", label: "Writing" },
+];
+---
+
+<header class="nav">
+  <div class="container inner">
+    <a class="wordmark" href="/">shoyeb<span>.dev</span></a>
+
+    <nav aria-label="Sections">
+      <ul>
+        {links.map((l) => (
+          <li><a href={l.href}>{l.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <a class="cta" href="#contact">Let&rsquo;s talk</a>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: color-mix(in srgb, var(--ground) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .inner {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    min-height: 4rem;
+  }
+
+  .wordmark {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-decoration: none;
+    margin-right: auto;
+  }
+  .wordmark span { color: var(--muted); }
+
+  nav ul {
+    display: flex;
+    gap: 1.75rem;
+  }
+
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: var(--step-0);
+  }
+  nav a:hover { color: var(--ink); }
+
+  .cta {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: var(--step-0);
+    font-weight: 500;
+    white-space: nowrap;
+    transition: border-color 160ms ease, color 160ms ease;
+  }
+  .cta:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* no hamburger — the section anchors simply fold away and the CTA stays */
+  @media (max-width: 40rem) {
+    nav { display: none; }
+  }
+</style>
