@@ -1,168 +1,115 @@
 ---
 const year = 2026;
-
-const sections = [
-  { label: "About", href: "/#about" },
-  { label: "What I do", href: "/#services" },
-  { label: "Work", href: "/#shipped" },
-  { label: "Skills", href: "/#skills" },
-  { label: "Writing", href: "/writing" },
-];
-
-const elsewhere = [
-  { label: "hello@shoyeb.dev", href: "mailto:hello@shoyeb.dev" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/shoyeb-akhtar/" },
-  { label: "GitHub", href: "https://github.com/toshoyeb" },
-];
 ---
 
 <footer>
-  <div class="container-wide top">
-    <div class="pitch">
-      <p class="wordmark">
-        <span class="mark" aria-hidden="true"></span>
-        shoyeb<span class="tld">.dev</span>
-      </p>
-      <p class="line">
-        I build mobile apps, ship them to the stores, and keep them alive. Currently taking
-        on new work.
-      </p>
-      <a class="cta" href="/#contact">Start a conversation</a>
+  <div class="container-wide inner">
+    <div class="identity">
+      <p class="wordmark">shoyeb<span class="dot">.</span></p>
+      <p class="role">React Native &middot; iOS &middot; Android</p>
     </div>
 
-    <nav class="cols" aria-label="Footer">
-      <div>
-        <p class="label">Sections</p>
-        <ul>
-          {sections.map((l) => (
-            <li><a href={l.href}>{l.label}</a></li>
-          ))}
-        </ul>
-      </div>
+    <nav class="links" aria-label="Elsewhere">
+      <a href="https://github.com/toshoyeb" rel="noopener">
+        <svg viewBox="0 0 16 16" width="17" height="17" aria-hidden="true" fill="currentColor">
+          <path
+            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"
+          />
+        </svg>
+        GitHub
+      </a>
 
-      <div>
-        <p class="label">Elsewhere</p>
-        <ul>
-          {elsewhere.map((l) => (
-            <li><a href={l.href} rel="noopener">{l.label}</a></li>
-          ))}
-        </ul>
-      </div>
+      <a href="https://www.linkedin.com/in/shoyeb-akhtar/" rel="noopener">
+        <svg viewBox="0 0 16 16" width="17" height="17" aria-hidden="true" fill="currentColor">
+          <path
+            d="M13.6 0H2.4A2.4 2.4 0 0 0 0 2.4v11.2A2.4 2.4 0 0 0 2.4 16h11.2a2.4 2.4 0 0 0 2.4-2.4V2.4A2.4 2.4 0 0 0 13.6 0ZM5 13.2H2.8V6.1H5v7.1ZM3.9 5.1a1.3 1.3 0 1 1 0-2.6 1.3 1.3 0 0 1 0 2.6Zm9.3 8.1h-2.2V9.5c0-.9-.02-2-1.24-2-1.25 0-1.44.96-1.44 1.95v3.75H6.1V6.1h2.12v.97h.03c.3-.56 1.02-1.15 2.1-1.15 2.25 0 2.85 1.48 2.85 3.4v3.88Z"
+          />
+        </svg>
+        LinkedIn
+      </a>
 
-      <div>
-        <p class="label">Shipped</p>
-        <ul>
-          <li>
-            <a href="https://apps.apple.com/in/app/rangenow-ev-charging/id6759698887" rel="noopener">
-              RangeNow &middot; App Store
-            </a>
-          </li>
-          <li>
-            <a href="https://play.google.com/store/apps/details?id=now.range.app" rel="noopener">
-              RangeNow &middot; Google Play
-            </a>
-          </li>
-          <li><a href="https://www.range.now/" rel="noopener">range.now</a></li>
-          <li><a href="https://sitelead.range.now/" rel="noopener">sitelead.range.now</a></li>
-        </ul>
-      </div>
+      <a href="mailto:hello@shoyeb.dev">
+        <svg viewBox="0 0 16 16" width="17" height="17" aria-hidden="true">
+          <rect
+            x="0.9"
+            y="2.6"
+            width="14.2"
+            height="10.8"
+            rx="1.6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.4"
+          />
+          <path
+            d="M1.6 4 8 8.7 14.4 4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        Email
+      </a>
     </nav>
   </div>
 
-  <div class="container-wide bottom">
-    <p>&copy; {year} Shoyeb Akhtar</p>
-    <p>Bengaluru, India &middot; UTC +5:30</p>
-  </div>
+  <p class="copyright">&copy; {year} Shoyeb Akhtar. All rights reserved.</p>
 </footer>
 
 <style>
   footer {
     border-top: 1px solid var(--rule);
     background: var(--sunk);
+    padding-block: clamp(2.5rem, 5vw, 3.5rem) 2rem;
   }
 
-  .top {
-    display: grid;
-    gap: 3rem;
-    padding-block: clamp(3rem, 6vw, 4.5rem) 2.75rem;
-  }
-
-  @media (min-width: 56rem) {
-    .top {
-      grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
-      gap: 5rem;
-    }
-  }
-
-  .pitch { display: grid; gap: 1rem; justify-items: start; }
-
-  .wordmark {
-    display: flex;
-    align-items: center;
-    gap: 0.55rem;
-    font-weight: 600;
-    font-size: var(--step-2);
-    letter-spacing: -0.02em;
-    color: var(--ink);
-  }
-  .tld { color: var(--muted); }
-
-  .mark {
-    width: 0.6rem;
-    height: 0.6rem;
-    border-radius: 2px;
-    background: var(--accent-vivid);
-    transform: rotate(45deg);
-  }
-
-  .line {
-    color: var(--muted);
-    max-width: 34ch;
-  }
-
-  .cta {
-    margin-top: 0.35rem;
-    padding: 0.6rem 1.25rem;
-    background: transparent;
-    border: 1px solid var(--rule);
-    border-radius: 999px;
-    color: var(--ink);
-    text-decoration: none;
-    font-size: var(--step-0);
-    font-weight: 500;
-    transition: border-color 180ms ease, color 180ms ease;
-  }
-  .cta:hover {
-    border-color: var(--accent-vivid);
-    color: var(--accent);
-  }
-
-  .cols {
-    display: grid;
-    gap: 2.25rem;
-    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
-  }
-
-  .cols .label { margin-bottom: 0.9rem; }
-
-  .cols ul { display: grid; gap: 0.55rem; }
-
-  .cols a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: var(--step-0);
-  }
-  .cols a:hover { color: var(--accent); }
-
-  .bottom {
+  .inner {
     display: flex;
     flex-wrap: wrap;
+    align-items: flex-start;
     justify-content: space-between;
-    gap: 0.75rem;
-    padding-block: 1.4rem;
-    border-top: 1px solid var(--rule);
+    gap: 2rem;
+  }
+
+  .wordmark {
     font-family: var(--font-mono);
-    font-size: var(--step--1);
+    font-size: var(--step-2);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+  }
+  .dot { color: var(--accent-vivid); }
+
+  .role {
+    margin-top: 0.5rem;
+    font-size: var(--step-0);
     color: var(--muted);
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding-top: 0.4rem;
+  }
+
+  .links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: var(--step-0);
+    transition: color 180ms ease;
+  }
+  .links a:hover { color: var(--accent); }
+
+  .copyright {
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+    text-align: center;
+    font-size: var(--step-0);
+    color: var(--muted);
+    max-width: none;
   }
 </style>
