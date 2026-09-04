@@ -1,0 +1,38 @@
+---
+const year = 2026;
+const links = [
+  { label: "Email", href: "mailto:hello@shoyeb.dev" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/shoyeb-akhtar/" },
+  { label: "GitHub", href: "https://github.com/toshoyeb" },
+];
+---
+
+<footer>
+  <div class="container inner">
+    <p>&copy; {year} Shoyeb Akhtar &middot; Bengaluru, India</p>
+    <ul>
+      {links.map((l) => (
+        <li><a href={l.href} rel="noopener">{l.label}</a></li>
+      ))}
+    </ul>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--rule);
+    background: var(--sunk);
+    padding-block: 2rem;
+  }
+
+  .inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: var(--step-0);
+    color: var(--muted);
+  }
+
+  ul { display: flex; gap: 1.5rem; }
+</style>

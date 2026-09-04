@@ -1,0 +1,164 @@
+---
+/* Field order is deliberate: the qualifying questions come first so a serious
+   enquiry commits real information before it is asked for a name, and a
+   tyre-kicker drops out early. Name and email come last. */
+const needs = [
+  "Take over an existing app",
+  "Fix crashes or performance",
+  "Get it into the stores",
+  "Build features",
+  "Ongoing maintenance",
+  "Something else",
+];
+const budgets = ["Under $2,000", "$2,000 — $5,000", "$5,000 — $10,000", "$10,000+", "Not sure yet"];
+const timelines = ["As soon as possible", "Within a month", "This quarter", "Just exploring"];
+---
+
+<section id="contact" class="contact">
+  <div class="container">
+    <p class="label">Get in touch</p>
+    <h2>Tell me what&rsquo;s broken, or what you need built</h2>
+    <p class="lede">
+      The more you can tell me up front, the more useful my first reply will be. Or just
+      email <a href="mailto:hello@shoyeb.dev">hello@shoyeb.dev</a>.
+    </p>
+
+    <form method="post" action="/api/contact">
+      <div class="field">
+        <label for="need">What do you need?</label>
+        <select id="need" name="need" required>
+          <option value="">Choose one&hellip;</option>
+          {needs.map((n) => <option value={n}>{n}</option>)}
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="project">Tell me about the project</label>
+        <textarea
+          id="project"
+          name="project"
+          rows="5"
+          required
+          placeholder="What the app does, what platform it's on, and what's going wrong."
+        ></textarea>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="budget">Budget range</label>
+          <select id="budget" name="budget" required>
+            <option value="">Choose one&hellip;</option>
+            {budgets.map((b) => <option value={b}>{b}</option>)}
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="timeline">Timeline</label>
+          <select id="timeline" name="timeline" required>
+            <option value="">Choose one&hellip;</option>
+            {timelines.map((t) => <option value={t}>{t}</option>)}
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="name">Your name</label>
+          <input id="name" name="name" type="text" autocomplete="name" required />
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required />
+        </div>
+      </div>
+
+      <!-- honeypot: hidden from people, filled by bots -->
+      <div class="hp" aria-hidden="true">
+        <label for="company">Company</label>
+        <input id="company" name="company" type="text" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <button type="submit">Send enquiry</button>
+    </form>
+  </div>
+</section>
+
+<style>
+  .contact { padding-block: var(--section-gap); }
+
+  h2 { margin-block: 0.75rem 1rem; max-width: 26ch; }
+  .lede { max-width: 52ch; font-size: var(--step-2); }
+
+  form {
+    display: grid;
+    gap: 1.25rem;
+    max-width: 40rem;
+    margin-top: 2.5rem;
+  }
+
+  .row {
+    display: grid;
+    gap: 1.25rem;
+  }
+  @media (min-width: 34rem) {
+    .row { grid-template-columns: 1fr 1fr; }
+  }
+
+  .field { display: grid; gap: 0.4rem; }
+
+  label {
+    font-size: var(--step-0);
+    font-weight: 500;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    padding: 0.65rem 0.8rem;
+    font-family: inherit;
+    font-size: var(--step-0);
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    transition: border-color 160ms ease;
+  }
+  input:hover,
+  select:hover,
+  textarea:hover { border-color: var(--muted); }
+  input:focus,
+  select:focus,
+  textarea:focus { border-color: var(--accent); }
+
+  textarea { resize: vertical; }
+
+  button {
+    justify-self: start;
+    margin-top: 0.5rem;
+    padding: 0.75rem 1.6rem;
+    font-family: inherit;
+    font-size: var(--step-1);
+    font-weight: 500;
+    color: var(--on-accent);
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background-color 160ms ease, border-color 160ms ease;
+  }
+  button:hover {
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+  }
+
+  .hp {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+</style>
