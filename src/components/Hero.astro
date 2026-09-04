@@ -23,7 +23,8 @@ const stores = [
     </div>
 
     <p class="live">
-      Live today:
+      {/* explicit space: Astro trims the whitespace between text and an expression */}
+      Live today:{" "}
       {stores.map((s, i) => (
         <>
           {i > 0 && <span aria-hidden="true"> &middot; </span>}
