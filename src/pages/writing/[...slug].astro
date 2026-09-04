@@ -1,0 +1,132 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts");
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const fmt = new Intl.DateTimeFormat("en-GB", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+---
+
+<Base
+  title={`${post.data.title} — Shoyeb Akhtar`}
+  description={post.data.description}
+  path={`/writing/${post.id}`}
+>
+  <Nav />
+
+  <main id="main" class="post">
+    <div class="container">
+      <article>
+        <header>
+          <p class="date">
+            <time datetime={post.data.date.toISOString()}>{fmt.format(post.data.date)}</time>
+          </p>
+          <h1>{post.data.title}</h1>
+          <p class="lede">{post.data.description}</p>
+          <ul class="tags">
+            {post.data.tags.map((tag) => <li>{tag}</li>)}
+          </ul>
+        </header>
+
+        <div class="prose">
+          <Content />
+        </div>
+      </article>
+
+      <p class="back"><a href="/writing">&larr; All writing</a></p>
+    </div>
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  .post { padding-block: clamp(3rem, 8vw, 5rem) var(--section-gap); }
+
+  article { max-width: 40rem; }
+
+  header {
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .date {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+
+  h1 {
+    margin-block: 0.9rem 1.1rem;
+    font-size: var(--step-4);
+  }
+
+  .lede { font-size: var(--step-2); max-width: 42ch; }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 1.4rem;
+  }
+  .tags li {
+    padding: 0.15rem 0.55rem;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    background: var(--sunk);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+
+  .back { margin-top: 3.5rem; }
+
+  /* rendered markdown */
+  .prose { margin-top: 2.5rem; }
+
+  .prose :global(h2) {
+    margin-block: 2.75rem 0.9rem;
+    font-size: var(--step-3);
+  }
+
+  .prose :global(p) {
+    margin-block: 0 1.15rem;
+    max-width: 68ch;
+  }
+
+  .prose :global(strong) { font-weight: 600; }
+  .prose :global(em) { font-style: italic; }
+
+  .prose :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    padding: 0.1em 0.35em;
+    background: var(--sunk);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+  }
+
+  .prose :global(a) { font-weight: 500; }
+
+  .prose :global(ul) {
+    margin-block: 0 1.15rem;
+    padding-left: 1.2rem;
+    list-style: disc;
+  }
+  .prose :global(li) { margin-bottom: 0.4rem; }
+</style>

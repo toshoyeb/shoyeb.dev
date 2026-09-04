@@ -1,0 +1,121 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+
+const posts = (await getCollection("posts")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const fmt = new Intl.DateTimeFormat("en-GB", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+---
+
+<Base
+  title="Writing — Shoyeb Akhtar"
+  description="Notes on building, shipping and maintaining production mobile apps."
+  path="/writing"
+>
+  <Nav />
+
+  <main id="main" class="index">
+    <div class="container">
+      <p class="label">Writing</p>
+      <h1>Notes from shipping mobile apps</h1>
+      <p class="lede">
+        What I have learned building two apps from an empty repo and keeping one of them
+        alive in production.
+      </p>
+
+      <ul class="posts">
+        {
+          posts.map((post) => (
+            <li>
+              <p class="date">
+                <time datetime={post.data.date.toISOString()}>{fmt.format(post.data.date)}</time>
+              </p>
+              <div>
+                <h2><a href={`/writing/${post.id}`}>{post.data.title}</a></h2>
+                <p class="desc">{post.data.description}</p>
+                <ul class="tags">
+                  {post.data.tags.map((tag) => <li>{tag}</li>)}
+                </ul>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  .index { padding-block: clamp(3rem, 8vw, 5rem) var(--section-gap); }
+
+  h1 {
+    margin-block: 0.75rem 1.25rem;
+    font-size: var(--step-4);
+    max-width: 24ch;
+  }
+  .lede { max-width: 52ch; font-size: var(--step-2); }
+
+  .posts {
+    display: grid;
+    margin-top: 3.5rem;
+  }
+
+  .posts > li {
+    display: grid;
+    gap: 0.6rem 2.5rem;
+    padding-block: 1.9rem;
+    border-top: 1px solid var(--rule);
+  }
+  .posts > li:last-child { border-bottom: 1px solid var(--rule); }
+
+  @media (min-width: 46rem) {
+    .posts > li {
+      grid-template-columns: minmax(0, 11rem) minmax(0, 1fr);
+    }
+  }
+
+  .date {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+
+  h2 { font-size: var(--step-2); }
+  h2 a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+  h2 a:hover { color: var(--accent); }
+
+  .desc {
+    margin-top: 0.4rem;
+    color: var(--muted);
+    max-width: 58ch;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.9rem;
+  }
+  .tags li {
+    padding: 0.15rem 0.55rem;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    background: var(--sunk);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+</style>
