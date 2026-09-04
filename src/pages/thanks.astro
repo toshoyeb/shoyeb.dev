@@ -1,0 +1,32 @@
+---
+import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Base
+  title="Enquiry sent — Shoyeb Akhtar"
+  description="Your enquiry has been sent."
+  path="/thanks"
+>
+  <Nav />
+  <main id="main" class="note">
+    <div class="container">
+      <p class="label">Sent</p>
+      <h1>Got it &mdash; thanks.</h1>
+      <p class="lede">
+        I read every enquiry myself and reply within a working day, usually sooner. If it
+        is urgent, email <a href="mailto:hello@shoyeb.dev">hello@shoyeb.dev</a> directly.
+      </p>
+      <p class="back"><a href="/">&larr; Back to the site</a></p>
+    </div>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .note { padding-block: clamp(4rem, 12vw, 8rem); }
+  h1 { margin-block: 1rem 1.25rem; font-size: var(--step-4); }
+  .lede { max-width: 48ch; }
+  .back { margin-top: 2rem; }
+</style>
