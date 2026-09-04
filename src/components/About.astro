@@ -1,0 +1,114 @@
+---
+/* NOTE (Shoyeb): the last paragraph is a placeholder. I have not invented
+   hobbies for you — replace the bracketed line with whatever you actually want
+   a stranger to know, or delete the paragraph entirely. */
+---
+
+<section id="about" class="about">
+  <div class="container inner">
+    <div class="portrait">
+      <picture>
+        <source srcset="/img/shoyeb.webp" type="image/webp" />
+        <img
+          src="/img/shoyeb.jpg"
+          width="1000"
+          height="1250"
+          alt="Shoyeb Akhtar"
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
+    </div>
+
+    <div class="text">
+      <p class="label">About</p>
+      <h2>Hi, I&rsquo;m Shoyeb.</h2>
+
+      <p>
+        I build mobile products, which in practice means I spend most of my time on the
+        unglamorous half of the job: working out why a build will not sign, why a crash will
+        not reproduce, and why an app that felt quick in the office crawls on a
+        three-year-old Android.
+      </p>
+
+      <p>
+        I came into software sideways &mdash; my degree was engineering, not computer
+        science &mdash; and I suspect that is part of why I like the messy end of it.
+        Production never hands you a clean problem. Two startups in, both times as the
+        person responsible for the app existing at all, and the pattern I keep noticing is
+        that the hard part is almost never writing the feature.
+      </p>
+
+      <p class="personal">
+        Outside of work: [replace this &mdash; one honest line about what you actually do
+        when you are not shipping].
+      </p>
+
+      <p class="where">
+        Based in Bengaluru, working with teams across the US, UK and Australia.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    padding-block: var(--section-gap);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .inner {
+    display: grid;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  @media (min-width: 52rem) {
+    .inner {
+      grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
+      gap: 4rem;
+    }
+  }
+
+  .portrait {
+    max-width: 20rem;
+    position: relative;
+  }
+
+  .portrait img {
+    width: 100%;
+    border-radius: 6px;
+    /* a soft accent edge rather than a drop shadow — reads intentional, not stock */
+    outline: 1px solid var(--rule);
+    outline-offset: -1px;
+  }
+
+  .portrait::after {
+    content: "";
+    position: absolute;
+    inset: auto -0.75rem -0.75rem auto;
+    width: 60%;
+    height: 60%;
+    border-right: 2px solid var(--accent);
+    border-bottom: 2px solid var(--accent);
+    border-radius: 0 0 6px 0;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .text { display: grid; gap: 1.15rem; }
+
+  h2 { margin-bottom: 0.35rem; }
+
+  .text > p:not(.label) { color: var(--muted); }
+
+  .personal {
+    padding-left: 1rem;
+    border-left: 2px solid var(--accent-wash);
+  }
+
+  .where {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+  }
+</style>
