@@ -1,0 +1,80 @@
+---
+/* Deliberately written as problems the buyer recognises, not as framework names.
+   The stack lives further down the page. */
+const services = [
+  {
+    title: "Take over an existing app",
+    body:
+      "The app exists, but whoever built it has moved on, or it has stalled. I learn the codebase, tell you honestly what state it is in, and take over shipping it.",
+  },
+  {
+    title: "Fix crashes and performance",
+    body:
+      "Users are hitting crashes you cannot reproduce, or the app is slow on the phones people actually own. I work from real crash and trace data rather than guesses.",
+  },
+  {
+    title: "Get it into the stores",
+    body:
+      "Signing, provisioning, TestFlight, App Store Connect, Play Console, review. The part that stalls launches and has nothing to do with your product.",
+  },
+  {
+    title: "Build features",
+    body:
+      "New screens and flows inside an app that already has users, wired to your backend, without leaving a mess for whoever comes next.",
+  },
+  {
+    title: "Keep it running",
+    body:
+      "Ongoing engineering ownership: releases, SDK upgrades, store policy changes, and the crashes that show up when the OS updates. Monthly, not per-ticket.",
+  },
+];
+---
+
+<section id="services" class="services">
+  <div class="container">
+    <p class="label">What I do</p>
+    <h2>Five things people hire me for</h2>
+
+    <ul>
+      {services.map((s) => (
+        <li>
+          <h3>{s.title}</h3>
+          <p>{s.body}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .services {
+    padding-block: var(--section-gap);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  h2 { margin-block: 0.75rem 3rem; }
+
+  ul {
+    display: grid;
+    gap: 0;
+  }
+
+  li {
+    display: grid;
+    gap: 0.5rem 3rem;
+    padding-block: 1.6rem;
+    border-top: 1px solid var(--rule);
+  }
+  li:last-child { border-bottom: 1px solid var(--rule); }
+
+  /* title in a fixed left column, prose in a readable measure beside it */
+  @media (min-width: 48rem) {
+    li {
+      grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+      align-items: baseline;
+    }
+  }
+
+  h3 { color: var(--ink); }
+  p { color: var(--muted); max-width: 58ch; }
+</style>
