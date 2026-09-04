@@ -4,20 +4,21 @@
 :root {
   color-scheme: light;
 
-  /* surfaces — warm neutrals */
-  --ground: #fcfbf9;
+  /* surfaces — clean and cool, not warm-dull */
+  --ground: #fbfbfa;
   --surface: #ffffff;
-  --sunk: #f4f2ed;
-  --rule: #e4e1da;
+  --sunk: #f1f3f2;
+  --rule: #e0e3e2;
 
   /* text */
-  --ink: #1a1917;
-  --muted: #6b6862;
+  --ink: #101314;
+  --muted: #5c6461;
 
-  /* accent — deep teal against the warm ground */
-  --accent: #0f6e63;
-  --accent-hover: #0b564d;
-  --accent-wash: #e8f2f0;
+  /* accent — vivid teal for graphics, a deeper cut for text contrast */
+  --accent: #06806f;
+  --accent-vivid: #00b89e;
+  --accent-hover: #04695b;
+  --accent-wash: #e2f4f0;
   --on-accent: #ffffff;
 
   --shadow: 0 1px 2px rgba(26, 25, 23, 0.06), 0 8px 24px -12px rgba(26, 25, 23, 0.12);
@@ -36,7 +37,8 @@
 
   /* rhythm */
   --measure: 68ch;
-  --container: 1080px;
+  --container: 1240px;
+  --container-wide: 1440px;
   --gap: 1rem;
   --section-gap: clamp(4rem, 9vw, 7rem);
 }
@@ -44,16 +46,17 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --ground: #131311;
-    --surface: #1c1b18;
-    --sunk: #232220;
-    --rule: #2e2c27;
-    --ink: #eceae4;
-    --muted: #9a968d;
-    --accent: #4fbfae;
-    --accent-hover: #6fd0c1;
-    --accent-wash: #1b2b28;
-    --on-accent: #10201d;
+    --ground: #08090a;
+    --surface: #131516;
+    --sunk: #1b1e1f;
+    --rule: #2a2e2f;
+    --ink: #f2f4f3;
+    --muted: #99a3a0;
+    --accent: #05d6be;
+    --accent-vivid: #05d6be;
+    --accent-hover: #4ee3d1;
+    --accent-wash: #102b28;
+    --on-accent: #04211d;
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px -12px rgba(0, 0, 0, 0.6);
   }
 }
@@ -154,6 +157,14 @@ ul { margin: 0; padding: 0; list-style: none; }
   max-width: var(--container);
   margin-inline: auto;
   padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+}
+
+/* header and footer run wider than the reading column */
+.container-wide {
+  width: 100%;
+  max-width: var(--container-wide);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
 }
 
 .label {
