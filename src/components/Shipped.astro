@@ -12,6 +12,10 @@ const work = [
       "Find a charger, plan a trip around one, book and pay for a session. Built from an empty repo and live on both stores, where I own mobile end to end — releases, crash and ANR triage, performance on real Android hardware, and the SDK upgrades that keep it shippable.",
     stack: ["React Native", "Expo", "TypeScript", "Maps", "Firebase", "Sentry"],
     post: "/writing/rangenow",
+    /* TODO (Shoyeb): drop screenshots into public/img/ and list them here.
+       Use the PUBLIC store-listing screenshots, not internal builds.
+       e.g. { src: "/img/rangenow-map", w: 1080, h: 2340, alt: "Charger map" } */
+    gallery: [],
     links: [
       { label: "App Store", href: "https://apps.apple.com/in/app/rangenow-ev-charging/id6759698887" },
       { label: "Google Play", href: "https://play.google.com/store/apps/details?id=now.range.app" },
@@ -26,6 +30,14 @@ const work = [
       "Purchases, refunds, subscriptions and shipments pulled into one place. There was no mobile app when I joined; I built it in React Native and led its release to the Play Store, then owned the frontend for a year and a half — deep linking, the data layer, charts, secure file uploads, a caching pass that cut load times from about three seconds to one, and push through FCM.",
     stack: ["React Native", "Expo", "Redux / RTK Query", "Node.js", "MongoDB", "Temporal"],
     post: "/writing/kuttl",
+    gallery: [
+      {
+        src: "/img/kuttl-banner",
+        w: 1500,
+        h: 500,
+        alt: "Kuttl marketing banner: if it gets ordered, you can track it on Kuttl",
+      },
+    ],
     links: [{ label: "@KuttlApp", href: "https://x.com/KuttlApp" }],
   },
 ];
@@ -48,6 +60,24 @@ const work = [
           </div>
 
           <div class="detail">
+            {w.gallery.length > 0 && (
+              <div class="gallery" role="group" aria-label={`${w.name} previews`} tabindex="0">
+                {w.gallery.map((shot) => (
+                  <picture>
+                    <source srcset={`${shot.src}.webp`} type="image/webp" />
+                    <img
+                      src={`${shot.src}.jpg`}
+                      width={shot.w}
+                      height={shot.h}
+                      alt={shot.alt}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </picture>
+                ))}
+              </div>
+            )}
+
             <p>{w.body}</p>
 
             <ul class="stack">
@@ -121,6 +151,30 @@ const work = [
   }
 
   .detail { display: grid; gap: 1.25rem; }
+
+  /* CSS-only preview strip: scroll-snaps on touch, no carousel library */
+  .gallery {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+  .gallery > picture {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+  .gallery img {
+    height: auto;
+    max-height: 22rem;
+    width: auto;
+    max-width: min(100%, 44rem);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    background: var(--sunk);
+  }
   .detail > p { color: var(--muted); }
 
   .stack {
