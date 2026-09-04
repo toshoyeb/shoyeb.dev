@@ -1,20 +1,77 @@
 ---
 const year = 2026;
-const links = [
-  { label: "Email", href: "mailto:hello@shoyeb.dev" },
+
+const sections = [
+  { label: "About", href: "/#about" },
+  { label: "What I do", href: "/#services" },
+  { label: "Work", href: "/#shipped" },
+  { label: "Skills", href: "/#skills" },
+  { label: "Writing", href: "/writing" },
+];
+
+const elsewhere = [
+  { label: "hello@shoyeb.dev", href: "mailto:hello@shoyeb.dev" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/shoyeb-akhtar/" },
   { label: "GitHub", href: "https://github.com/toshoyeb" },
 ];
 ---
 
 <footer>
-  <div class="container inner">
-    <p>&copy; {year} Shoyeb Akhtar &middot; Bengaluru, India</p>
-    <ul>
-      {links.map((l) => (
-        <li><a href={l.href} rel="noopener">{l.label}</a></li>
-      ))}
-    </ul>
+  <div class="container-wide top">
+    <div class="pitch">
+      <p class="wordmark">
+        <span class="mark" aria-hidden="true"></span>
+        shoyeb<span class="tld">.dev</span>
+      </p>
+      <p class="line">
+        I build mobile apps, ship them to the stores, and keep them alive. Currently taking
+        on new work.
+      </p>
+      <a class="cta" href="/#contact">Start a conversation</a>
+    </div>
+
+    <nav class="cols" aria-label="Footer">
+      <div>
+        <p class="label">Sections</p>
+        <ul>
+          {sections.map((l) => (
+            <li><a href={l.href}>{l.label}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <p class="label">Elsewhere</p>
+        <ul>
+          {elsewhere.map((l) => (
+            <li><a href={l.href} rel="noopener">{l.label}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <p class="label">Shipped</p>
+        <ul>
+          <li>
+            <a href="https://apps.apple.com/in/app/rangenow-ev-charging/id6759698887" rel="noopener">
+              RangeNow &middot; App Store
+            </a>
+          </li>
+          <li>
+            <a href="https://play.google.com/store/apps/details?id=now.range.app" rel="noopener">
+              RangeNow &middot; Google Play
+            </a>
+          </li>
+          <li><a href="https://www.range.now/" rel="noopener">range.now</a></li>
+          <li><a href="https://sitelead.range.now/" rel="noopener">sitelead.range.now</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <div class="container-wide bottom">
+    <p>&copy; {year} Shoyeb Akhtar</p>
+    <p>Bengaluru, India &middot; UTC +5:30</p>
   </div>
 </footer>
 
@@ -22,17 +79,90 @@ const links = [
   footer {
     border-top: 1px solid var(--rule);
     background: var(--sunk);
-    padding-block: 2rem;
   }
 
-  .inner {
+  .top {
+    display: grid;
+    gap: 3rem;
+    padding-block: clamp(3rem, 6vw, 4.5rem) 2.75rem;
+  }
+
+  @media (min-width: 56rem) {
+    .top {
+      grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+      gap: 5rem;
+    }
+  }
+
+  .pitch { display: grid; gap: 1rem; justify-items: start; }
+
+  .wordmark {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-weight: 600;
+    font-size: var(--step-2);
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .tld { color: var(--muted); }
+
+  .mark {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 2px;
+    background: var(--accent-vivid);
+    transform: rotate(45deg);
+  }
+
+  .line {
+    color: var(--muted);
+    max-width: 34ch;
+  }
+
+  .cta {
+    margin-top: 0.35rem;
+    padding: 0.6rem 1.25rem;
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: var(--step-0);
+    font-weight: 500;
+    transition: border-color 180ms ease, color 180ms ease;
+  }
+  .cta:hover {
+    border-color: var(--accent-vivid);
+    color: var(--accent);
+  }
+
+  .cols {
+    display: grid;
+    gap: 2.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  }
+
+  .cols .label { margin-bottom: 0.9rem; }
+
+  .cols ul { display: grid; gap: 0.55rem; }
+
+  .cols a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: var(--step-0);
+  }
+  .cols a:hover { color: var(--accent); }
+
+  .bottom {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 1rem;
-    font-size: var(--step-0);
+    gap: 0.75rem;
+    padding-block: 1.4rem;
+    border-top: 1px solid var(--rule);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
     color: var(--muted);
   }
-
-  ul { display: flex; gap: 1.5rem; }
 </style>
