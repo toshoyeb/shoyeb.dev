@@ -50,6 +50,7 @@ const ogImage = new URL("/og.png", Astro.site ?? "https://shoyeb.dev").href;
 
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
+    <p id="copy-status" class="sr-only" role="status" aria-live="polite"></p>
     <slot />
 
     <script is:inline>
@@ -77,6 +78,39 @@ const ogImage = new URL("/og.png", Astro.site ?? "https://shoyeb.dev").href;
             root.style.scrollBehavior = previous;
           }),
         );
+      })();
+    </script>
+
+    <script is:inline>
+      // Email addresses are rendered as mailto: links so they still work with
+      // no JS, but a mailto is a dead end for anyone without a mail client
+      // configured — it opens Outlook, or nothing. Where the clipboard is
+      // available, copy instead and say so.
+      (() => {
+        if (!navigator.clipboard || !window.isSecureContext) return;
+
+        document.addEventListener("click", async (event) => {
+          const trigger = event.target.closest("[data-copy]");
+          if (!trigger) return;
+
+          const value = trigger.dataset.copy;
+          try {
+            await navigator.clipboard.writeText(value);
+          } catch {
+            return; // permission denied — let the mailto: through untouched
+          }
+          event.preventDefault();
+
+          trigger.classList.add("is-copied");
+          const status = document.getElementById("copy-status");
+          if (status) status.textContent = value + " copied to clipboard";
+
+          clearTimeout(trigger._copyTimer);
+          trigger._copyTimer = setTimeout(() => {
+            trigger.classList.remove("is-copied");
+            if (status) status.textContent = "";
+          }, 1900);
+        });
       })();
     </script>
 
