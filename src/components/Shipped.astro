@@ -11,6 +11,7 @@ const work = [
     body:
       "Find a charger, plan a trip around one, book and pay for a session. Built from an empty repo and live on both stores, where I own mobile end to end — releases, crash and ANR triage, performance on real Android hardware, and the SDK upgrades that keep it shippable.",
     stack: ["React Native", "Expo", "TypeScript", "Maps", "Firebase", "Sentry"],
+    post: "/writing/rangenow",
     links: [
       { label: "App Store", href: "https://apps.apple.com/in/app/rangenow-ev-charging/id6759698887" },
       { label: "Google Play", href: "https://play.google.com/store/apps/details?id=now.range.app" },
@@ -24,6 +25,7 @@ const work = [
     body:
       "Purchases, refunds, subscriptions and shipments pulled into one place. There was no mobile app when I joined; I built it in React Native and led its release to the Play Store, then owned the frontend for a year and a half — deep linking, the data layer, charts, secure file uploads, a caching pass that cut load times from about three seconds to one, and push through FCM.",
     stack: ["React Native", "Expo", "Redux / RTK Query", "Node.js", "MongoDB", "Temporal"],
+    post: "/writing/kuttl",
     links: [{ label: "@KuttlApp", href: "https://x.com/KuttlApp" }],
   },
 ];
@@ -51,6 +53,8 @@ const work = [
             <ul class="stack">
               {w.stack.map((s) => <li>{s}</li>)}
             </ul>
+
+            <p class="story"><a href={w.post}>Read how it was built &rarr;</a></p>
 
             <p class="links">
               {w.links.map((l, i) => (
@@ -134,8 +138,15 @@ const work = [
     color: var(--muted);
   }
 
-  .links {
+  .story {
     font-weight: 500;
+  }
+  .story a { text-decoration: none; }
+  .story a:hover { text-decoration: underline; }
+
+  .links {
+    font-size: var(--step-0);
+    color: var(--muted);
   }
   .links a { text-decoration: none; }
   .links a:hover { text-decoration: underline; }
