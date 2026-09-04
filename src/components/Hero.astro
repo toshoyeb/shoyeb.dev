@@ -6,10 +6,11 @@ const stores = [
 ---
 
 <section class="hero">
+  <div class="glow" aria-hidden="true"></div>
   <div class="container">
     <p class="label">Mobile Product Engineer &middot; Bengaluru, UTC +5:30</p>
 
-    <h1>I build mobile apps, ship them to the stores, and keep them alive.</h1>
+    <h1>I build mobile apps, ship them to the stores, and <em>keep them alive</em>.</h1>
 
     <p class="lede">
       React Native and Expo, across iOS and Android. Two startups, two apps built from an
@@ -35,8 +36,41 @@ const stores = [
 
 <style>
   .hero {
+    position: relative;
     padding-block: clamp(3.5rem, 8vw, 6.5rem) var(--section-gap);
     border-bottom: 1px solid var(--rule);
+    overflow: hidden;
+  }
+
+  /* A single soft field of accent behind the opening. One flourish, not five. */
+  .glow {
+    position: absolute;
+    inset: -30% 0 auto -10%;
+    height: 130%;
+    background:
+      radial-gradient(
+        42rem 26rem at 18% 22%,
+        color-mix(in srgb, var(--accent) 14%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        30rem 20rem at 78% 8%,
+        color-mix(in srgb, var(--accent) 8%, transparent),
+        transparent 72%
+      );
+    pointer-events: none;
+  }
+
+  .container { position: relative; }
+
+  h1 em {
+    font-style: normal;
+    color: var(--accent);
+    /* underline sits below the descenders rather than through them */
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+    text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
   }
 
   h1 {

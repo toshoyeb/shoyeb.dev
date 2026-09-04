@@ -1,0 +1,56 @@
+/* Scroll reveals.
+ *
+ * Two rules this follows deliberately, both from usability research on
+ * scroll-triggered animation:
+ *
+ *   1. Nothing that is primary reading matter animates. The headline, the
+ *      positioning line, service copy and contact details render immediately —
+ *      people read fade-in body text as a page that has not finished loading.
+ *   2. A reveal fires once. Scrolling back up does not replay it.
+ *
+ * The offset state is gated behind .js-reveal, which the script adds only when
+ * it is safe to animate. With JavaScript off, or prefers-reduced-motion set,
+ * the class never lands and everything is simply visible.
+ */
+
+.js-reveal [data-reveal] {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.js-reveal [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 380ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 380ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* Staggered children, for lists where a single fade would feel flat. */
+.js-reveal [data-reveal-stagger] > * {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.js-reveal [data-reveal-stagger].is-revealed > * {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 340ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 340ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.js-reveal [data-reveal-stagger].is-revealed > *:nth-child(2) { transition-delay: 60ms; }
+.js-reveal [data-reveal-stagger].is-revealed > *:nth-child(3) { transition-delay: 120ms; }
+.js-reveal [data-reveal-stagger].is-revealed > *:nth-child(4) { transition-delay: 180ms; }
+.js-reveal [data-reveal-stagger].is-revealed > *:nth-child(5) { transition-delay: 240ms; }
+.js-reveal [data-reveal-stagger].is-revealed > *:nth-child(6) { transition-delay: 300ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .js-reveal [data-reveal],
+  .js-reveal [data-reveal-stagger] > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

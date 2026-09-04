@@ -61,7 +61,7 @@ const work = [
 
           <div class="detail">
             {w.gallery.length > 0 && (
-              <div class="gallery" role="group" aria-label={`${w.name} previews`} tabindex="0">
+              <div class="gallery" data-reveal role="group" aria-label={`${w.name} previews`} tabindex="0">
                 {w.gallery.map((shot) => (
                   <picture>
                     <source srcset={`${shot.src}.webp`} type="image/webp" />
