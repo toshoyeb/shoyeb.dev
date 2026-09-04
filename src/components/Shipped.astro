@@ -1,0 +1,142 @@
+---
+/* Screenshots come from the public store listings only — never internal builds.
+   Image slots are intentionally absent until those assets exist; a broken
+   <img> costs more than no image. */
+const work = [
+  {
+    name: "RangeNow",
+    tagline: "EV charging",
+    period: "Jul 2025 — present",
+    role: "Mobile Product Engineer at Range",
+    body:
+      "Find a charger, plan a trip around one, book and pay for a session. Built from an empty repo and live on both stores, where I own mobile end to end — releases, crash and ANR triage, performance on real Android hardware, and the SDK upgrades that keep it shippable.",
+    stack: ["React Native", "Expo", "TypeScript", "Maps", "Firebase", "Sentry"],
+    links: [
+      { label: "App Store", href: "https://apps.apple.com/in/app/rangenow-ev-charging/id6759698887" },
+      { label: "Google Play", href: "https://play.google.com/store/apps/details?id=now.range.app" },
+    ],
+  },
+  {
+    name: "Kuttl",
+    tagline: "Purchase and subscription tracking",
+    period: "Oct 2023 — May 2025",
+    role: "Founding team, then Full Stack Developer",
+    body:
+      "Purchases, refunds, subscriptions and shipments pulled into one place. There was no mobile app when I joined; I built it in React Native and led its release to the Play Store, then owned the frontend for a year and a half — deep linking, the data layer, charts, secure file uploads, a caching pass that cut load times from about three seconds to one, and push through FCM.",
+    stack: ["React Native", "Expo", "Redux / RTK Query", "Node.js", "MongoDB", "Temporal"],
+    links: [{ label: "@KuttlApp", href: "https://x.com/KuttlApp" }],
+  },
+];
+---
+
+<section id="shipped" class="shipped">
+  <div class="container">
+    <p class="label">Work</p>
+    <h2>Two apps, both built from zero</h2>
+
+    <ul>
+      {work.map((w) => (
+        <li>
+          <div class="head">
+            <h3>
+              {w.name}
+              <span class="tagline">{w.tagline}</span>
+            </h3>
+            <p class="meta">{w.role}<br /><span class="period">{w.period}</span></p>
+          </div>
+
+          <div class="detail">
+            <p>{w.body}</p>
+
+            <ul class="stack">
+              {w.stack.map((s) => <li>{s}</li>)}
+            </ul>
+
+            <p class="links">
+              {w.links.map((l, i) => (
+                <>
+                  {i > 0 && <span aria-hidden="true"> &middot; </span>}
+                  <a href={l.href} rel="noopener">{l.label} &rarr;</a>
+                </>
+              ))}
+            </p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .shipped {
+    padding-block: var(--section-gap);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  h2 { margin-block: 0.75rem 3rem; }
+
+  .shipped > .container > ul {
+    display: grid;
+    gap: 3.5rem;
+  }
+
+  .shipped > .container > ul > li {
+    display: grid;
+    gap: 1.25rem 3rem;
+  }
+
+  @media (min-width: 52rem) {
+    .shipped > .container > ul > li {
+      grid-template-columns: minmax(0, 16rem) minmax(0, 1fr);
+    }
+  }
+
+  h3 {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .tagline {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--accent);
+    text-transform: none;
+  }
+
+  .meta {
+    margin-top: 0.75rem;
+    font-size: var(--step-0);
+    color: var(--muted);
+  }
+  .period {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+  }
+
+  .detail { display: grid; gap: 1.25rem; }
+  .detail > p { color: var(--muted); }
+
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .stack li {
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    background: var(--sunk);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+
+  .links {
+    font-weight: 500;
+  }
+  .links a { text-decoration: none; }
+  .links a:hover { text-decoration: underline; }
+</style>
