@@ -8,7 +8,7 @@ const release = "https://github.com/getsentry/sentry-react-native/releases/tag/8
     <p class="label">Upstream</p>
     <h2>Bugs I found in production, fixed at the source</h2>
 
-    <article>
+    <article data-reveal>
       <h3>
         <a href={issue} rel="noopener">sentry-react-native #6630</a>
       </h3>
@@ -52,6 +52,8 @@ const release = "https://github.com/getsentry/sentry-react-native/releases/tag/8
   }
 
   h3 a {
+    display: inline-block;
+    padding-block: 0.3rem;
     font-family: var(--font-mono);
     font-size: var(--step-1);
     text-decoration: none;

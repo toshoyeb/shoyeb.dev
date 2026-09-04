@@ -2,17 +2,54 @@
 import "@fontsource-variable/instrument-sans";
 import "@fontsource-variable/jetbrains-mono";
 import "../styles/tokens.css";
+import "../styles/motion.css";
 
 interface Props {
   title: string;
   description: string;
   /** Path only, e.g. "/writing/kuttl". Joined onto the site origin. */
   path?: string;
+  /** "article" for posts, so shares render as writing rather than a home page. */
+  type?: "website" | "article";
+  published?: Date;
+  /** Form outcome pages: reachable, but not search results. */
+  noindex?: boolean;
 }
 
-const { title, description, path = "/" } = Astro.props;
-const canonical = new URL(path, Astro.site ?? "https://shoyeb.dev").href;
-const ogImage = new URL("/og.png", Astro.site ?? "https://shoyeb.dev").href;
+const { title, description, path = "/", type = "website", published, noindex = false } = Astro.props;
+const origin = Astro.site ?? new URL("https://shoyeb.dev");
+const canonical = new URL(path, origin).href;
+const ogImage = new URL("/og.png", origin).href;
+
+/* Person schema on the home page only — one entity, not one per page. The job
+   this does is connecting the site to the name a prospect will search for, and
+   to the GitHub and LinkedIn profiles they will find alongside it. */
+const person = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Shoyeb Akhtar",
+  url: origin.href,
+  image: new URL("/img/shoyeb.jpg", origin).href,
+  jobTitle: "Mobile Product Engineer",
+  description:
+    "React Native and Expo engineer. Builds mobile apps, ships them to the App Store and Google Play, and keeps them running in production.",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Bengaluru",
+    addressCountry: "IN",
+  },
+  email: "mailto:hello@shoyeb.dev",
+  sameAs: ["https://github.com/toshoyeb", "https://www.linkedin.com/in/shoyeb-akhtar/"],
+  knowsAbout: [
+    "React Native",
+    "Expo",
+    "TypeScript",
+    "iOS development",
+    "Android development",
+    "App Store and Google Play releases",
+    "Mobile crash and performance debugging",
+  ],
+};
 ---
 
 <!doctype html>
@@ -23,21 +60,129 @@ const ogImage = new URL("/og.png", Astro.site ?? "https://shoyeb.dev").href;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#0f6e63" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#131311" media="(prefers-color-scheme: dark)" />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={type} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="shoyeb.dev — I build mobile apps, ship them, and keep them alive." />
+    <meta property="og:site_name" content="shoyeb.dev" />
+    {published && <meta property="article:published_time" content={published.toISOString()} />}
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
+    {path === "/" && (
+      <script type="application/ld+json" set:html={JSON.stringify(person)} is:inline />
+    )}
+    <script is:inline>
+      // Runs before paint: no flash of the wrong theme on load.
+      try {
+        const saved = localStorage.getItem("theme");
+        if (saved === "dark" || saved === "light") {
+          document.documentElement.dataset.theme = saved;
+        }
+      } catch (e) {
+        /* private mode or storage blocked — fall back to the OS preference */
+      }
+    </script>
   </head>
 
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
+    <p id="copy-status" class="sr-only" role="status" aria-live="polite"></p>
     <slot />
+
+    <script is:inline>
+      // Arriving from another page at /#section, the browser starts a smooth
+      // scroll while the page is still settling and never re-targets it, so it
+      // stops short — measured at 478px short of #skills. Land it exactly once
+      // layout is final, unless the visitor has already taken over the scroll.
+      (() => {
+        const id = decodeURIComponent(location.hash.slice(1));
+        if (!id) return;
+
+        let takenOver = false;
+        const cede = () => { takenOver = true; };
+        for (const ev of ["wheel", "touchstart", "keydown"])
+          addEventListener(ev, cede, { once: true, passive: true });
+
+        addEventListener("load", () =>
+          requestAnimationFrame(() => {
+            const el = document.getElementById(id);
+            if (takenOver || !el) return;
+            const root = document.documentElement;
+            const previous = root.style.scrollBehavior;
+            root.style.scrollBehavior = "auto";
+            el.scrollIntoView();
+            root.style.scrollBehavior = previous;
+          }),
+        );
+      })();
+    </script>
+
+    <script is:inline>
+      // Email addresses are rendered as mailto: links so they still work with
+      // no JS, but a mailto is a dead end for anyone without a mail client
+      // configured — it opens Outlook, or nothing. Where the clipboard is
+      // available, copy instead and say so.
+      (() => {
+        if (!navigator.clipboard || !window.isSecureContext) return;
+
+        document.addEventListener("click", async (event) => {
+          const trigger = event.target.closest("[data-copy]");
+          if (!trigger) return;
+
+          const value = trigger.dataset.copy;
+          try {
+            await navigator.clipboard.writeText(value);
+          } catch {
+            return; // permission denied — let the mailto: through untouched
+          }
+          event.preventDefault();
+
+          trigger.classList.add("is-copied");
+          const status = document.getElementById("copy-status");
+          if (status) status.textContent = value + " copied to clipboard";
+
+          clearTimeout(trigger._copyTimer);
+          trigger._copyTimer = setTimeout(() => {
+            trigger.classList.remove("is-copied");
+            if (status) status.textContent = "";
+          }, 1900);
+        });
+      })();
+    </script>
+
+    <script is:inline>
+      // Reveal on first intersection only, then stop observing that element.
+      (() => {
+        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const targets = document.querySelectorAll("[data-reveal], [data-reveal-stagger]");
+        if (reduced || !("IntersectionObserver" in window) || targets.length === 0) return;
+
+        // Only now is it safe to hide anything: JS is running and motion is allowed.
+        document.documentElement.classList.add("js-reveal");
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              entry.target.classList.add("is-revealed");
+              observer.unobserve(entry.target);
+            }
+          },
+          { rootMargin: "0px 0px -8% 0px", threshold: 0.05 },
+        );
+
+        for (const target of targets) observer.observe(target);
+      })();
+    </script>
   </body>
 </html>

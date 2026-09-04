@@ -1,7 +1,13 @@
 ---
 /* Screenshots come from the public store listings only — never internal builds.
    Image slots are intentionally absent until those assets exist; a broken
-   <img> costs more than no image. */
+   <img> costs more than no image.
+
+   Two media shapes, because the two projects left behind different assets:
+     "shots"  — a run of portrait screenshots, shown as a scroll-snap strip
+     "banner" — a single wide image, shown as one block, no scroll affordance
+   Kuttl is wound down and only its launch banner survives publicly, so it gets
+   the second treatment rather than a one-item carousel. */
 const work = [
   {
     name: "RangeNow",
@@ -12,6 +18,18 @@ const work = [
       "Find a charger, plan a trip around one, book and pay for a session. Built from an empty repo and live on both stores, where I own mobile end to end — releases, crash and ANR triage, performance on real Android hardware, and the SDK upgrades that keep it shippable.",
     stack: ["React Native", "Expo", "TypeScript", "Maps", "Firebase", "Sentry"],
     post: "/writing/rangenow",
+    /* Official App Store listing screenshots, pulled from the public iTunes API.
+       They already ship with a device frame, so do not add another. */
+    media: {
+      kind: "shots",
+      items: [
+        { src: "/img/rangenow-1", w: 720, h: 1560, alt: "RangeNow charger discovery map" },
+        { src: "/img/rangenow-2", w: 720, h: 1560, alt: "RangeNow trip planning" },
+        { src: "/img/rangenow-3", w: 720, h: 1560, alt: "RangeNow charger details" },
+        { src: "/img/rangenow-4", w: 720, h: 1560, alt: "RangeNow charging session" },
+        { src: "/img/rangenow-5", w: 720, h: 1560, alt: "RangeNow booking and payment" },
+      ],
+    },
     links: [
       { label: "App Store", href: "https://apps.apple.com/in/app/rangenow-ev-charging/id6759698887" },
       { label: "Google Play", href: "https://play.google.com/store/apps/details?id=now.range.app" },
@@ -26,6 +44,18 @@ const work = [
       "Purchases, refunds, subscriptions and shipments pulled into one place. There was no mobile app when I joined; I built it in React Native and led its release to the Play Store, then owned the frontend for a year and a half — deep linking, the data layer, charts, secure file uploads, a caching pass that cut load times from about three seconds to one, and push through FCM.",
     stack: ["React Native", "Expo", "Redux / RTK Query", "Node.js", "MongoDB", "Temporal"],
     post: "/writing/kuttl",
+    media: {
+      kind: "banner",
+      caption: "Launch campaign artwork — the app itself is no longer distributed.",
+      items: [
+        {
+          src: "/img/kuttl-banner",
+          w: 1500,
+          h: 500,
+          alt: "Kuttl launch banner: a billboard reading “If it gets ordered, you can track it on Kuttl”, with the app's returns screen on a phone alongside",
+        },
+      ],
+    },
     links: [{ label: "@KuttlApp", href: "https://x.com/KuttlApp" }],
   },
 ];
@@ -48,6 +78,43 @@ const work = [
           </div>
 
           <div class="detail">
+            {/* the strip scrolls, so it is a focusable group; the banner does not,
+                and giving it a tab stop would be a stop that goes nowhere */}
+            {w.media.kind === "shots" && (
+              <div class="strip" data-reveal role="group" aria-label={`${w.name} previews`} tabindex="0">
+                {w.media.items.map((shot) => (
+                  <picture>
+                    <source srcset={`${shot.src}.webp`} type="image/webp" />
+                    <img
+                      src={`${shot.src}.jpg`}
+                      width={shot.w}
+                      height={shot.h}
+                      alt={shot.alt}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </picture>
+                ))}
+              </div>
+            )}
+
+            {w.media.kind === "banner" && w.media.items.map((shot) => (
+              <figure class="banner" data-reveal>
+                <picture>
+                  <source srcset={`${shot.src}.webp`} type="image/webp" />
+                  <img
+                    src={`${shot.src}.jpg`}
+                    width={shot.w}
+                    height={shot.h}
+                    alt={shot.alt}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+                {w.media.caption && <figcaption>{w.media.caption}</figcaption>}
+              </figure>
+            ))}
+
             <p>{w.body}</p>
 
             <ul class="stack">
@@ -121,6 +188,49 @@ const work = [
   }
 
   .detail { display: grid; gap: 1.25rem; }
+
+  /* CSS-only preview strip: scroll-snaps on touch, no carousel library */
+  .strip {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+  .strip > picture {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+  .strip img {
+    height: auto;
+    max-height: 30rem;
+    width: auto;
+    max-width: min(100%, 44rem);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    background: var(--sunk);
+  }
+
+  /* One wide image carries the whole entry, so it spans the column rather than
+     sitting in a strip that has nothing to scroll to. */
+  .banner img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    background: var(--sunk);
+  }
+
+  .banner figcaption {
+    margin-top: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+
   .detail > p { color: var(--muted); }
 
   .stack {
@@ -141,13 +251,27 @@ const work = [
   .story {
     font-weight: 500;
   }
-  .story a { text-decoration: none; }
+  .story a {
+    display: inline-block;
+    padding-block: 0.2rem;
+    text-decoration: none;
+  }
   .story a:hover { text-decoration: underline; }
 
+  /* flex rather than inline text: Astro trims the whitespace around the
+     separator span, which left the middot jammed against the next link */
   .links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 0.6rem;
     font-size: var(--step-0);
     color: var(--muted);
   }
-  .links a { text-decoration: none; }
+  .links a {
+    display: inline-block;
+    padding-block: 0.2rem;
+    text-decoration: none;
+  }
   .links a:hover { text-decoration: underline; }
 </style>

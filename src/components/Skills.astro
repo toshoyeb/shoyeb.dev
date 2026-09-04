@@ -1,0 +1,243 @@
+---
+/* Organised by the stage of an app's life each tool belongs to, rather than as a
+   logo grid or proficiency bars — the stages are a real sequence, so the numbering
+   carries information. Deliberately no skill percentages: they only advertise
+   where you are weakest. */
+const stages = [
+  {
+    n: "01",
+    name: "Build",
+    blurb: "From an empty repo to something that runs on both platforms.",
+    items: [
+      "React Native",
+      "Expo",
+      "TypeScript",
+      "Expo Router",
+      "React Navigation",
+      "Reanimated",
+      "Gesture Handler",
+      "react-native-maps",
+      "Redux",
+      "RTK Query",
+    ],
+  },
+  {
+    n: "02",
+    name: "Ship",
+    blurb: "The part that stalls launches and has nothing to do with the product.",
+    items: [
+      "EAS Build",
+      "EAS Update",
+      "App Store Connect",
+      "Play Console",
+      "TestFlight",
+      "Signing & provisioning",
+      "Dev / staging / prod",
+      "Xcode",
+      "Gradle",
+      "CI/CD",
+    ],
+  },
+  {
+    n: "03",
+    name: "Observe",
+    blurb: "Knowing what is actually happening on other people's phones.",
+    items: [
+      "Sentry",
+      "Crashlytics",
+      "Play Vitals",
+      "GA4",
+      "Firebase Analytics",
+      "BigQuery",
+      "PostHog",
+      "AppsFlyer",
+    ],
+  },
+  {
+    n: "04",
+    name: "Keep alive",
+    blurb: "Everything after launch, which is most of an app's life.",
+    items: [
+      "Crash & ANR triage",
+      "Performance profiling",
+      "SDK migrations",
+      "Deep links",
+      "Remote Config",
+      "Push notifications",
+      "Store policy",
+    ],
+  },
+];
+
+const also = [
+  {
+    label: "Backend & web",
+    items: [
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "PostgreSQL",
+      "React",
+      "Next.js",
+      "Astro",
+      "Firebase",
+      "Temporal.io",
+      "GCP",
+      "Docker",
+    ],
+  },
+  {
+    label: "Languages",
+    items: ["TypeScript", "JavaScript", "Python", "Java", "Kotlin (basics)", "Swift (basics)"],
+  },
+];
+---
+
+<section id="skills" class="skills">
+  <div class="container">
+    <p class="label">Skills</p>
+    <h2>Everything an app goes through, and what I use at each step</h2>
+
+    <ol class="stages" data-reveal-stagger>
+      {stages.map((stage) => (
+        <li>
+          <div class="marker" aria-hidden="true">
+            <span class="n">{stage.n}</span>
+            <span class="rail"></span>
+          </div>
+
+          <div class="body">
+            <h3>{stage.name}</h3>
+            <p class="blurb">{stage.blurb}</p>
+            <ul class="chips">
+              {stage.items.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <div class="also">
+      {also.map((group) => (
+        <div>
+          <p class="label">{group.label}</p>
+          <ul class="chips">
+            {group.items.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .skills {
+    padding-block: var(--section-gap);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  h2 {
+    margin-block: 0.75rem 3rem;
+    max-width: 34ch;
+  }
+
+  .stages {
+    display: grid;
+    gap: 0;
+    counter-reset: stage;
+  }
+
+  .stages > li {
+    display: grid;
+    grid-template-columns: 2.75rem minmax(0, 1fr);
+    gap: 0 1.5rem;
+    padding-bottom: 2.25rem;
+  }
+  .stages > li:last-child { padding-bottom: 0; }
+
+  /* the rail threads the stages together — an app moving down the pipeline */
+  .marker {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    justify-items: center;
+    gap: 0.5rem;
+  }
+
+  .n {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--accent-vivid);
+    border-radius: 50%;
+    background: var(--ground);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  .rail {
+    width: 1.5px;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--accent-vivid) 55%, transparent),
+      color-mix(in srgb, var(--accent-vivid) 8%, transparent)
+    );
+  }
+  .stages > li:last-child .rail { display: none; }
+
+  .body { padding-top: 0.3rem; }
+
+  h3 {
+    font-size: var(--step-2);
+    letter-spacing: -0.01em;
+  }
+
+  .blurb {
+    margin-block: 0.35rem 0.9rem;
+    color: var(--muted);
+    max-width: 52ch;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .chips li {
+    padding: 0.25rem 0.65rem;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    background: var(--surface);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--muted);
+    transition: border-color 180ms ease, color 180ms ease, transform 180ms ease;
+  }
+  .chips li:hover {
+    border-color: var(--accent-vivid);
+    color: var(--ink);
+    transform: translateY(-1px);
+  }
+
+  .also {
+    display: grid;
+    gap: 2rem;
+    margin-top: 3.5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  @media (min-width: 48rem) {
+    .also { grid-template-columns: 1fr 1fr; gap: 3rem; }
+  }
+
+  .also .label { margin-bottom: 0.9rem; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chips li:hover { transform: none; }
+  }
+</style>

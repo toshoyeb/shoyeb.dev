@@ -4,20 +4,21 @@
 :root {
   color-scheme: light;
 
-  /* surfaces — warm neutrals */
-  --ground: #fcfbf9;
+  /* surfaces — clean and cool, not warm-dull */
+  --ground: #fbfbfa;
   --surface: #ffffff;
-  --sunk: #f4f2ed;
-  --rule: #e4e1da;
+  --sunk: #f1f3f2;
+  --rule: #e0e3e2;
 
   /* text */
-  --ink: #1a1917;
-  --muted: #6b6862;
+  --ink: #101314;
+  --muted: #5c6461;
 
-  /* accent — deep teal against the warm ground */
-  --accent: #0f6e63;
-  --accent-hover: #0b564d;
-  --accent-wash: #e8f2f0;
+  /* accent — vivid teal for graphics, a deeper cut for text contrast */
+  --accent: #06806f;
+  --accent-vivid: #00b89e;
+  --accent-hover: #04695b;
+  --accent-wash: #e2f4f0;
   --on-accent: #ffffff;
 
   --shadow: 0 1px 2px rgba(26, 25, 23, 0.06), 0 8px 24px -12px rgba(26, 25, 23, 0.12);
@@ -36,7 +37,8 @@
 
   /* rhythm */
   --measure: 68ch;
-  --container: 1080px;
+  --container: 1240px;
+  --container-wide: 1440px;
   --gap: 1rem;
   --section-gap: clamp(4rem, 9vw, 7rem);
 }
@@ -44,16 +46,17 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --ground: #131311;
-    --surface: #1c1b18;
-    --sunk: #232220;
-    --rule: #2e2c27;
-    --ink: #eceae4;
-    --muted: #9a968d;
-    --accent: #4fbfae;
-    --accent-hover: #6fd0c1;
-    --accent-wash: #1b2b28;
-    --on-accent: #10201d;
+    --ground: #08090a;
+    --surface: #131516;
+    --sunk: #1b1e1f;
+    --rule: #2a2e2f;
+    --ink: #f2f4f3;
+    --muted: #99a3a0;
+    --accent: #05d6be;
+    --accent-vivid: #05d6be;
+    --accent-hover: #4ee3d1;
+    --accent-wash: #102b28;
+    --on-accent: #04211d;
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px -12px rgba(0, 0, 0, 0.6);
   }
 }
@@ -156,6 +159,14 @@ ul { margin: 0; padding: 0; list-style: none; }
   padding-inline: clamp(1.25rem, 5vw, 2.5rem);
 }
 
+/* header and footer run wider than the reading column */
+.container-wide {
+  width: 100%;
+  max-width: var(--container-wide);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
+}
+
 .label {
   font-family: var(--font-mono);
   font-size: var(--step--1);
@@ -169,6 +180,66 @@ ul { margin: 0; padding: 0; list-style: none; }
   font-size: var(--step-3);
   line-height: 1.45;
   color: var(--muted);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Click-to-copy: the cursor says it is not an ordinary link, and the
+   confirmation is appended so inline addresses keep reading as a sentence. */
+[data-copy] {
+  cursor: copy;
+}
+
+/* Confirmation is a pill rather than a floating badge: anything absolutely
+   positioned covers the line above or beside it somewhere on the page. This
+   takes up its own space, so it can never obscure copy, and reads as a badge
+   rather than as part of the sentence. The live region carries the same
+   wording for screen readers. */
+[data-copy] {
+  cursor: copy;
+}
+
+[data-copy].is-copied {
+  color: var(--accent);
+}
+
+[data-copy].is-copied::after {
+  content: "Copied";
+  display: inline-block;
+  margin-left: 0.45em;
+  padding: 0.2em 0.5em;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-family: var(--font-mono);
+  font-size: 0.72em;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  vertical-align: 0.08em;
+  animation: copy-badge 1.9s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+@keyframes copy-badge {
+  0% { opacity: 0; transform: scale(0.85); }
+  14% { opacity: 1; transform: scale(1.06); }
+  26% { transform: scale(1); }
+  76% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-copy].is-copied::after {
+    animation: none;
+  }
 }
 
 .skip-link {

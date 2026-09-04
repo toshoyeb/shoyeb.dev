@@ -3,14 +3,35 @@
    enquiry commits real information before it is asked for a name, and a
    tyre-kicker drops out early. Name and email come last. */
 const needs = [
+  "Build a new app from scratch",
   "Take over an existing app",
   "Fix crashes or performance",
   "Get it into the stores",
   "Build features",
+  "Build a website",
   "Ongoing maintenance",
   "Something else",
 ];
-const budgets = ["Under $2,000", "$2,000 — $5,000", "$5,000 — $10,000", "$10,000+", "Not sure yet"];
+
+/* Grouped rather than split into a second question: an enquiry is either a
+   fixed project or an hourly engagement, and asking twice makes the form
+   longer for no extra signal. */
+const budgetGroups = [
+  {
+    label: "Fixed project budget",
+    options: [
+      "$100 — $500",
+      "$500 — $1,000",
+      "$1,000 — $2,500",
+      "$2,500 — $5,000",
+      "$5,000+",
+    ],
+  },
+  {
+    label: "Hourly",
+    options: ["$10 — $15 / hour", "$15 — $20 / hour", "$20 — $30 / hour"],
+  },
+];
 const timelines = ["As soon as possible", "Within a month", "This quarter", "Just exploring"];
 ---
 
@@ -20,7 +41,7 @@ const timelines = ["As soon as possible", "Within a month", "This quarter", "Jus
     <h2>Tell me what&rsquo;s broken, or what you need built</h2>
     <p class="lede">
       The more you can tell me up front, the more useful my first reply will be. Or just
-      email <a href="mailto:hello@shoyeb.dev">hello@shoyeb.dev</a>.
+      email <a href="mailto:hello@shoyeb.dev" data-copy="hello@shoyeb.dev">hello@shoyeb.dev</a>.
     </p>
 
     <form method="post" action="/api/contact">
@@ -45,10 +66,15 @@ const timelines = ["As soon as possible", "Within a month", "This quarter", "Jus
 
       <div class="row">
         <div class="field">
-          <label for="budget">Budget range</label>
+          <label for="budget">Budget or rate</label>
           <select id="budget" name="budget" required>
             <option value="">Choose one&hellip;</option>
-            {budgets.map((b) => <option value={b}>{b}</option>)}
+            {budgetGroups.map((group) => (
+              <optgroup label={group.label}>
+                {group.options.map((o) => <option value={`${group.label}: ${o}`}>{o}</option>)}
+              </optgroup>
+            ))}
+            <option value="Not sure yet">Not sure yet</option>
           </select>
         </div>
 

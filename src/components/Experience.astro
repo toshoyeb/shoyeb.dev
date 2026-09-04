@@ -12,13 +12,7 @@ const roles = [
     period: "Dec 2023 — May 2025",
     org: "kuttl.in",
     title: "Full Stack Developer, Frontend",
-    note: "Owned the mobile frontend",
-  },
-  {
-    period: "Oct 2023 — Nov 2023",
-    org: "kuttl.in",
-    title: "Software Developer Intern",
-    note: "Founding team",
+    note: "Founding team; owned the mobile frontend",
   },
 ];
 ---
@@ -28,7 +22,7 @@ const roles = [
     <p class="label">Experience</p>
     <h2>Where I&rsquo;ve done it</h2>
 
-    <ul>
+    <ul data-reveal-stagger>
       {roles.map((r) => (
         <li>
           <p class="period">{r.period}</p>

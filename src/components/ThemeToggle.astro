@@ -1,0 +1,107 @@
+---
+/* Explicit theme choice, persisted. With nothing stored the page follows the OS
+   preference, which is what the tokens in tokens.css already do. */
+---
+
+<button
+  id="theme-toggle"
+  type="button"
+  class="toggle"
+  aria-label="Switch between light and dark theme"
+>
+  <svg class="sun" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true">
+    <circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6" />
+    <g stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+      <path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2" />
+      <path d="M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6" />
+    </g>
+  </svg>
+
+  <svg class="moon" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true">
+    <path
+      d="M20 14.4A8.2 8.2 0 0 1 9.6 4a8.5 8.5 0 1 0 10.4 10.4z"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linejoin="round"
+    />
+  </svg>
+</button>
+
+<script is:inline>
+  (() => {
+    const button = document.getElementById("theme-toggle");
+    if (!button) return;
+
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const current = () =>
+      document.documentElement.dataset.theme ?? (prefersDark.matches ? "dark" : "light");
+
+    const apply = (theme) => {
+      document.documentElement.dataset.theme = theme;
+      button.setAttribute("aria-pressed", String(theme === "dark"));
+      try {
+        localStorage.setItem("theme", theme);
+      } catch (e) {
+        /* storage blocked — the choice just will not persist */
+      }
+    };
+
+    button.setAttribute("aria-pressed", String(current() === "dark"));
+    button.addEventListener("click", () => apply(current() === "dark" ? "light" : "dark"));
+
+    // Follow the OS if the visitor has never made an explicit choice here.
+    prefersDark.addEventListener("change", (event) => {
+      let stored = null;
+      try {
+        stored = localStorage.getItem("theme");
+      } catch (e) {
+        /* ignore */
+      }
+      if (!stored) document.documentElement.dataset.theme = event.matches ? "dark" : "light";
+    });
+  })();
+</script>
+
+<style>
+  .toggle {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: color 180ms ease, border-color 180ms ease, transform 180ms ease;
+  }
+  .toggle:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    transform: rotate(-18deg);
+  }
+
+  .toggle svg {
+    grid-area: 1 / 1;
+    transition: opacity 180ms ease, transform 180ms ease;
+  }
+
+  /* light theme shows the moon (what you would switch to), and vice versa */
+  .sun { opacity: 0; transform: scale(0.7); }
+  .moon { opacity: 1; transform: scale(1); }
+
+  :global(:root[data-theme="dark"]) .sun { opacity: 1; transform: scale(1); }
+  :global(:root[data-theme="dark"]) .moon { opacity: 0; transform: scale(0.7); }
+
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme="light"])) .sun { opacity: 1; transform: scale(1); }
+    :global(:root:not([data-theme="light"])) .moon { opacity: 0; transform: scale(0.7); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .toggle:hover { transform: none; }
+  }
+</style>
