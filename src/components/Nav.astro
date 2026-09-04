@@ -41,8 +41,10 @@ const links = [
     position: sticky;
     top: 0;
     z-index: 20;
-    background: color-mix(in srgb, var(--ground) 86%, transparent);
-    backdrop-filter: blur(10px) saturate(1.4);
+    /* 86% let content read straight through the bar on mobile, where the page
+       scrolls directly beneath it — enough opacity to stay a surface, not a veil */
+    background: color-mix(in srgb, var(--ground) 94%, transparent);
+    backdrop-filter: blur(16px) saturate(1.4);
     border-bottom: 1px solid var(--rule);
   }
 
