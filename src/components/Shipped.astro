@@ -258,7 +258,13 @@ const work = [
   }
   .story a:hover { text-decoration: underline; }
 
+  /* flex rather than inline text: Astro trims the whitespace around the
+     separator span, which left the middot jammed against the next link */
   .links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 0.6rem;
     font-size: var(--step-0);
     color: var(--muted);
   }
