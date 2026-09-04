@@ -197,29 +197,43 @@ ul { margin: 0; padding: 0; list-style: none; }
   cursor: copy;
 }
 
-/* Confirmation is an effect rather than a word: the address flashes to the
-   accent and a tick pops in beside it. The live region carries the wording for
-   anyone who cannot see it. */
+/* Confirmation is a pill rather than a floating badge: anything absolutely
+   positioned covers the line above or beside it somewhere on the page. This
+   takes up its own space, so it can never obscure copy, and reads as a badge
+   rather than as part of the sentence. The live region carries the same
+   wording for screen readers. */
+[data-copy] {
+  cursor: copy;
+}
+
 [data-copy].is-copied {
   color: var(--accent);
 }
 
 [data-copy].is-copied::after {
-  content: "✓";
-  /* inline-block so the link's underline is not drawn through the tick,
-     and margin because a leading space would collapse */
+  content: "Copied";
   display: inline-block;
-  margin-left: 0.4em;
-  color: var(--accent);
-  animation: copy-tick 1.9s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  margin-left: 0.45em;
+  padding: 0.2em 0.5em;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-family: var(--font-mono);
+  font-size: 0.72em;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  vertical-align: 0.08em;
+  animation: copy-badge 1.9s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
 }
 
-@keyframes copy-tick {
-  0% { opacity: 0; transform: scale(0.5) translateY(2px); }
-  18% { opacity: 1; transform: scale(1.18) translateY(0); }
-  32% { transform: scale(1); }
-  78% { opacity: 1; }
-  100% { opacity: 0; transform: scale(1); }
+@keyframes copy-badge {
+  0% { opacity: 0; transform: scale(0.85); }
+  14% { opacity: 1; transform: scale(1.06); }
+  26% { transform: scale(1); }
+  76% { opacity: 1; }
+  100% { opacity: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
