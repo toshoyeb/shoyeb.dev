@@ -27,19 +27,41 @@ const services = [
     body:
       "Ongoing engineering ownership: releases, SDK upgrades, store policy changes, and the crashes that show up when the OS updates. Monthly, not per-ticket.",
   },
+  {
+    title: "Build the website too",
+    body:
+      "Marketing sites, landing pages and internal tools in React and Next.js, built to load fast rather than to win awards. Useful when the app and the site need to say the same thing.",
+    refs: [
+      { label: "range.now", href: "https://www.range.now/" },
+      { label: "sitelead.range.now", href: "https://sitelead.range.now/" },
+    ],
+  },
 ];
 ---
 
 <section id="services" class="services">
   <div class="container">
     <p class="label">What I do</p>
-    <h2>Five things people hire me for</h2>
+    <h2>Six things people hire me for</h2>
 
     <ul>
       {services.map((s) => (
         <li>
           <h3>{s.title}</h3>
-          <p>{s.body}</p>
+          <div>
+            <p>{s.body}</p>
+            {s.refs && (
+              <p class="refs">
+                Live:{" "}
+                {s.refs.map((r, i) => (
+                  <>
+                    {i > 0 && <span aria-hidden="true"> &middot; </span>}
+                    <a href={r.href} rel="noopener">{r.label}</a>
+                  </>
+                ))}
+              </p>
+            )}
+          </div>
         </li>
       ))}
     </ul>
@@ -77,4 +99,10 @@ const services = [
 
   h3 { color: var(--ink); }
   p { color: var(--muted); max-width: 58ch; }
+
+  .refs {
+    margin-top: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+  }
 </style>
