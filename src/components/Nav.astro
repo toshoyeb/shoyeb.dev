@@ -1,4 +1,6 @@
 ---
+import ThemeToggle from "./ThemeToggle.astro";
+
 const links = [
   { href: "#services", label: "What I do" },
   { href: "#shipped", label: "Work" },
@@ -18,7 +20,10 @@ const links = [
       </ul>
     </nav>
 
-    <a class="cta" href="#contact">Let&rsquo;s talk</a>
+    <div class="actions">
+      <ThemeToggle />
+      <a class="cta" href="#contact">Let&rsquo;s talk</a>
+    </div>
   </div>
 </header>
 
@@ -51,6 +56,12 @@ const links = [
   nav ul {
     display: flex;
     gap: 1.75rem;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
   }
 
   nav a {

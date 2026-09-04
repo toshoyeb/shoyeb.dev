@@ -34,6 +34,17 @@ const ogImage = new URL("/og.png", Astro.site ?? "https://shoyeb.dev").href;
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
+    <script is:inline>
+      // Runs before paint: no flash of the wrong theme on load.
+      try {
+        const saved = localStorage.getItem("theme");
+        if (saved === "dark" || saved === "light") {
+          document.documentElement.dataset.theme = saved;
+        }
+      } catch (e) {
+        /* private mode or storage blocked — fall back to the OS preference */
+      }
+    </script>
   </head>
 
   <body>
