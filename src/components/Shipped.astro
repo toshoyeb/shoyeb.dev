@@ -36,6 +36,31 @@ const work = [
     ],
   },
   {
+    name: "Smriti",
+    tagline: "Exam preparation",
+    period: "Mar 2026 — present",
+    role: "Contributor",
+    body:
+      "A study tool for UPPSC civil-services aspirants. 7,378 previous-year questions, each rebuilt as a micro-lesson that explains why the wrong options are wrong, and a spaced-repetition queue that brings back the ones you miss. I contribute to the engineering: a Next.js app over a large MongoDB corpus, local-first progress that syncs across devices, Razorpay payments, and public pages built to be found from search.",
+    stack: ["Next.js", "React", "TypeScript", "MongoDB", "Razorpay", "Vercel"],
+    post: "/writing/smriti",
+    /* The live public landing page, captured at desktop width — no fixtures,
+       no local build. */
+    media: {
+      kind: "banner",
+      caption: "smritipyq.in — the public question hub.",
+      items: [
+        {
+          src: "/img/smriti-landing",
+          w: 1600,
+          h: 796,
+          alt: "Smriti landing page reading “UPPSC (UPPCS) PYQs, organised for learning”, beside a sample lesson card: a previous-year question with its correct option marked and a note explaining one of the wrong options",
+        },
+      ],
+    },
+    links: [{ label: "smritipyq.in", href: "https://smritipyq.in/uppsc" }],
+  },
+  {
     name: "Kuttl",
     tagline: "Purchase and subscription tracking",
     period: "Oct 2023 — May 2025",
@@ -64,7 +89,7 @@ const work = [
 <section id="shipped" class="shipped">
   <div class="container">
     <p class="label">Work</p>
-    <h2>Two apps, both built from zero</h2>
+    <h2>Two apps built from zero, and a product outside mobile</h2>
 
     <ul>
       {work.map((w) => (
