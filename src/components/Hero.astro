@@ -1,7 +1,8 @@
 ---
-const stores = [
+const live = [
   { label: "App Store", href: "https://apps.apple.com/in/app/rangenow-ev-charging/id6759698887" },
   { label: "Google Play", href: "https://play.google.com/store/apps/details?id=now.range.app" },
+  { label: "smritipyq.in", href: "https://smritipyq.in/uppsc" },
 ];
 ---
 
@@ -14,7 +15,8 @@ const stores = [
 
     <p class="lede">
       React Native and Expo, across iOS and Android. Two startups, two apps built from an
-      empty repo &mdash; both shipped, and one live in production right now.
+      empty repo &mdash; both shipped, and one live in production right now. Alongside them,
+      web work on a live product outside mobile.
     </p>
 
     <div class="actions">
@@ -25,7 +27,7 @@ const stores = [
     <p class="live">
       {/* explicit space: Astro trims the whitespace between text and an expression */}
       Live today:{" "}
-      {stores.map((s, i) => (
+      {live.map((s, i) => (
         <>
           {i > 0 && <span aria-hidden="true"> &middot; </span>}
           <a href={s.href} rel="noopener">{s.label}</a>
