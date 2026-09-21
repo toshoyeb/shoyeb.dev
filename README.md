@@ -1,43 +1,67 @@
-# Astro Starter Kit: Minimal
+# shoyeb.dev
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Source for [shoyeb.dev](https://shoyeb.dev), the portfolio of Shoyeb Akhtar, a mobile product engineer working across React Native, Expo, iOS and Android.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+The site presents production work, engineering case studies and the services I offer to teams building or maintaining mobile products. It includes live store links for RangeNow, longer write-ups about shipped products, upstream open-source work and a contact form for project enquiries.
 
-## 🚀 Project Structure
+## What is here
 
-Inside of your Astro project, you'll see the following folders and files:
+- A focused overview of my mobile product work and technical background
+- Case studies for RangeNow, Kuttl and Smriti
+- Public App Store, Google Play and product links
+- Writing powered by Astro content collections
+- A serverless contact form with validation and spam protection
+- Responsive images, light/dark themes, reduced-motion support and SEO metadata
+
+## Stack
+
+- [Astro](https://astro.build/) and TypeScript
+- Plain Astro components and CSS, with no client-side framework
+- Cloudflare Pages and Pages Functions
+- Resend for contact-form delivery
+- GitHub Actions for build and deployment
+
+## Project structure
 
 ```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+public/                  Static images, icons and crawler files
+src/components/          Homepage sections and shared UI
+src/content/posts/       Project case studies
+src/layouts/             Shared document layout and metadata
+src/pages/               Homepage, writing routes and form outcomes
+src/styles/              Design tokens and motion styles
+functions/api/contact.ts Cloudflare Pages contact-form handler
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Local development
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Requires Node.js 22.12 or later.
 
-Any static assets, like images, can be placed in the `public/` directory.
+```sh
+npm install
+npm run dev
+```
 
-## 🧞 Commands
+The development server starts at `http://localhost:4321` by default.
 
-All commands are run from the root of the project, from a terminal:
+To create and inspect a production build:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+```sh
+npm run build
+npm run preview
+```
 
-## 👀 Want to learn more?
+## Contact form configuration
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+The Cloudflare Pages project needs these environment variables:
+
+- `RESEND_API_KEY` — a Resend API key authorized to send from `shoyeb.dev`
+- `CONTACT_TO` — the address that receives portfolio enquiries
+
+The form posts to `/api/contact`, validates the required fields, ignores honeypot submissions and redirects to a success or error page.
+
+## Deployment
+
+Every push to `main` runs the GitHub Actions deployment workflow. The workflow installs dependencies with `npm ci`, builds the static site, verifies the expected output and deploys `dist/` to the `shoyeb-dev` Cloudflare Pages project.
+
+Deployment requires the repository secrets `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`.
