@@ -3,6 +3,7 @@
    enquiry commits real information before it is asked for a name, and a
    tyre-kicker drops out early. Name and email come last. */
 const needs = [
+  "Get a release-readiness audit",
   "Build a new app from scratch",
   "Take over an existing app",
   "Fix crashes or performance",
@@ -13,24 +14,12 @@ const needs = [
   "Something else",
 ];
 
-/* Grouped rather than split into a second question: an enquiry is either a
-   fixed project or an hourly engagement, and asking twice makes the form
-   longer for no extra signal. */
-const budgetGroups = [
-  {
-    label: "Fixed project budget",
-    options: [
-      "$100 — $500",
-      "$500 — $1,000",
-      "$1,000 — $2,500",
-      "$2,500 — $5,000",
-      "$5,000+",
-    ],
-  },
-  {
-    label: "Hourly",
-    options: ["$10 — $15 / hour", "$15 — $20 / hour", "$20 — $30 / hour"],
-  },
+const budgets = [
+  "Under $500",
+  "$500 — $1,000",
+  "$1,000 — $2,500",
+  "$2,500 — $5,000",
+  "$5,000+",
 ];
 const timelines = ["As soon as possible", "Within a month", "This quarter", "Just exploring"];
 ---
@@ -66,14 +55,10 @@ const timelines = ["As soon as possible", "Within a month", "This quarter", "Jus
 
       <div class="row">
         <div class="field">
-          <label for="budget">Budget or rate</label>
+          <label for="budget">Expected project budget</label>
           <select id="budget" name="budget" required>
             <option value="">Choose one&hellip;</option>
-            {budgetGroups.map((group) => (
-              <optgroup label={group.label}>
-                {group.options.map((o) => <option value={`${group.label}: ${o}`}>{o}</option>)}
-              </optgroup>
-            ))}
+            {budgets.map((budget) => <option value={budget}>{budget}</option>)}
             <option value="Not sure yet">Not sure yet</option>
           </select>
         </div>
