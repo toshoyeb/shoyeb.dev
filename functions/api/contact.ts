@@ -14,7 +14,7 @@ interface Context {
   env: Record<string, string | undefined>;
 }
 
-const FIELDS = ["need", "project", "budget", "timeline", "name", "email"] as const;
+const FIELDS = ["need", "project", "name", "email"] as const;
 
 function seeOther(request: Request, path: string): Response {
   return new Response(null, {
@@ -42,6 +42,8 @@ export async function onRequestPost({ request, env }: Context): Promise<Response
     return seeOther(request, "/contact-error");
   }
 
+  const selectedPackage = String(form.get("package") ?? "").trim() || "Not selected";
+
   const apiKey = env.RESEND_API_KEY;
   const to = env.CONTACT_TO;
   if (!apiKey || !to) {
@@ -51,8 +53,7 @@ export async function onRequestPost({ request, env }: Context): Promise<Response
 
   const body = [
     `Need:     ${values.need}`,
-    `Budget:   ${values.budget}`,
-    `Timeline: ${values.timeline}`,
+    `Package:  ${selectedPackage}`,
     "",
     values.project,
     "",

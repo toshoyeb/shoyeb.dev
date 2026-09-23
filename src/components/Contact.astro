@@ -14,14 +14,6 @@ const needs = [
   "Something else",
 ];
 
-const budgets = [
-  "Under $500",
-  "$500 — $1,000",
-  "$1,000 — $2,500",
-  "$2,500 — $5,000",
-  "$5,000+",
-];
-const timelines = ["As soon as possible", "Within a month", "This quarter", "Just exploring"];
 ---
 
 <section id="contact" class="contact">
@@ -53,24 +45,7 @@ const timelines = ["As soon as possible", "Within a month", "This quarter", "Jus
         ></textarea>
       </div>
 
-      <div class="row">
-        <div class="field">
-          <label for="budget">Expected project budget</label>
-          <select id="budget" name="budget" required>
-            <option value="">Choose one&hellip;</option>
-            {budgets.map((budget) => <option value={budget}>{budget}</option>)}
-            <option value="Not sure yet">Not sure yet</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="timeline">Timeline</label>
-          <select id="timeline" name="timeline" required>
-            <option value="">Choose one&hellip;</option>
-            {timelines.map((t) => <option value={t}>{t}</option>)}
-          </select>
-        </div>
-      </div>
+      <input id="package" name="package" type="hidden" value="" />
 
       <div class="row">
         <div class="field">
