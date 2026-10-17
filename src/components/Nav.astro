@@ -25,6 +25,7 @@ const sections = [
           <li><a href={l.href}>{l.label}</a></li>
         ))}
         <li class="elsewhere"><a href="/writing">Writing</a></li>
+        <li><a class="resume" href="/resume.pdf">Resume</a></li>
       </ul>
     </nav>
 
@@ -92,7 +93,8 @@ const sections = [
     padding-left: 2rem;
     border-left: 1px solid var(--rule);
   }
-  .elsewhere a { color: var(--ink); }
+  .elsewhere a,
+  .resume { color: var(--ink); }
 
   nav a {
     position: relative;
