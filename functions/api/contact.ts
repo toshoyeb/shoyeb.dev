@@ -42,8 +42,6 @@ export async function onRequestPost({ request, env }: Context): Promise<Response
     return seeOther(request, "/contact-error");
   }
 
-  const selectedPackage = String(form.get("package") ?? "").trim() || "Not selected";
-
   const apiKey = env.RESEND_API_KEY;
   const to = env.CONTACT_TO;
   if (!apiKey || !to) {
@@ -53,7 +51,6 @@ export async function onRequestPost({ request, env }: Context): Promise<Response
 
   const body = [
     `Need:     ${values.need}`,
-    `Package:  ${selectedPackage}`,
     "",
     values.project,
     "",

@@ -8,143 +8,39 @@ const live = [
 
 <section class="hero">
   <div class="glow" aria-hidden="true"></div>
-  <div class="container hero-grid">
-    <div class="intro">
-      <p class="label">Mobile Product Engineer &middot; Bengaluru, UTC +5:30</p>
+  <div class="container">
+    <p class="label">Mobile Product Engineer &middot; Bengaluru, UTC +5:30</p>
 
-      <h1>I build mobile apps, ship them to the stores, and <em>keep them alive</em>.</h1>
+    <h1>I build mobile apps, ship them to the stores, and <em>keep them alive</em>.</h1>
 
-      <p class="lede">
-        React Native and Expo, across iOS and Android. I take over stalled apps, fix production
-        problems, and own the release path from EAS builds through App Store and Play review.
-        Two apps built from an empty repo &mdash; both shipped, and one live in production today. Alongside them,
-        I can do web work as well.
-      </p>
+    <p class="lede">
+      React Native and Expo, across iOS and Android. I take over stalled apps, fix production
+      problems, and own the release path from EAS builds through App Store and Play review.
+      Two apps built from an empty repo &mdash; both shipped, and one live in production today. Alongside them,
+      I can do web work as well.
+    </p>
 
-      <div class="actions">
-        <a class="primary" href="#contact">Discuss your app</a>
-        <a class="secondary" href="#shipped">See what I&rsquo;ve shipped</a>
-      </div>
-
-      <p class="offer">
-        Need a smaller first step? Start with a fixed-scope technical assessment.
-      </p>
-
-      <p class="live">
-        {/* explicit space: Astro trims the whitespace between text and an expression */}
-        Live today:{" "}
-        {live.map((s, i) => (
-          <>
-            {i > 0 && <span aria-hidden="true"> &middot; </span>}
-            <a href={s.href} rel="noopener">{s.label}</a>
-          </>
-        ))}
-      </p>
+    <div class="actions">
+      <a class="primary" href="#contact">Discuss your app</a>
+      <a class="secondary" href="#shipped">See what I&rsquo;ve shipped</a>
     </div>
 
-    <aside class="package-card" aria-label="Fixed-scope technical assessment packages">
-      <div class="package-tabs" role="tablist" aria-label="Assessment packages">
-        <button
-          id="basic-tab"
-          type="button"
-          role="tab"
-          aria-selected="true"
-          aria-controls="basic-package"
-          data-package-tab="basic-package"
-        >Basic</button>
-        <button
-          id="premium-tab"
-          type="button"
-          role="tab"
-          aria-selected="false"
-          aria-controls="premium-package"
-          data-package-tab="premium-package"
-        >Premium</button>
-      </div>
+    <p class="offer">
+      Need a smaller first step? Start with a fixed-scope release-readiness audit.
+    </p>
 
-      <div id="basic-package" class="package-panel" role="tabpanel" aria-labelledby="basic-tab">
-        <div class="package-heading">
-          <div>
-            <p class="package-kicker">Basic</p>
-            <h2>Quick assessment</h2>
-          </div>
-          <p class="price free-price"><strong>Free</strong> first step</p>
-        </div>
-        <p class="package-summary">A focused second opinion before you spend more time or money.</p>
-        <dl class="package-meta">
-          <div><dt>Delivery</dt><dd>2 days</dd></div>
-          <div><dt>Revisions</dt><dd>0</dd></div>
-        </dl>
-        <p class="list-label">What&rsquo;s included</p>
-        <ul class="included">
-          <li>Review of one clearly described issue</li>
-          <li>Written diagnosis and recommended next step</li>
-          <li>Relevant documentation or resource links</li>
-        </ul>
-        <p class="excluded"><strong>Not included:</strong> code changes, builds, or store submission.</p>
-        <a class="choose-package" href="#contact" data-package-choice="Basic — Free">Start free assessment</a>
-      </div>
-
-      <div
-        id="premium-package"
-        class="package-panel"
-        role="tabpanel"
-        aria-labelledby="premium-tab"
-        hidden
-      >
-        <div class="package-heading">
-          <div>
-            <p class="package-kicker">Premium</p>
-            <h2>Detailed assessment</h2>
-          </div>
-          <p class="price"><strong>$10</strong> fixed</p>
-        </div>
-        <p class="package-summary">A deeper review with findings ordered into a practical action plan.</p>
-        <dl class="package-meta">
-          <div><dt>Delivery</dt><dd>2 days</dd></div>
-          <div><dt>Revisions</dt><dd>1 follow-up</dd></div>
-        </dl>
-        <p class="list-label">What&rsquo;s included</p>
-        <ul class="included">
-          <li>Review of one issue with supporting logs or screenshots</li>
-          <li>Prioritized findings and likely root causes</li>
-          <li>Written action plan with recommended next steps</li>
-        </ul>
-        <p class="excluded"><strong>Not included:</strong> implementation, design, or store submission.</p>
-        <a class="choose-package" href="#contact" data-package-choice="Premium — $10">Choose Premium</a>
-      </div>
-
-      <p class="long-term">
-        <strong>Need ongoing help?</strong> Let&rsquo;s discuss it online. I&rsquo;m open to negotiation,
-        and long-term engagements include unlimited revisions.
-      </p>
-    </aside>
+    <p class="live">
+      {/* explicit space: Astro trims the whitespace between text and an expression */}
+      Live today:{" "}
+      {live.map((s, i) => (
+        <>
+          {i > 0 && <span aria-hidden="true"> &middot; </span>}
+          <a href={s.href} rel="noopener">{s.label}</a>
+        </>
+      ))}
+    </p>
   </div>
 </section>
-
-<script>
-  const tabs = document.querySelectorAll<HTMLButtonElement>("[data-package-tab]");
-  const panels = document.querySelectorAll<HTMLElement>(".package-panel");
-
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", () => {
-      tabs.forEach((item) => item.setAttribute("aria-selected", String(item === tab)));
-      panels.forEach((panel) => {
-        panel.hidden = panel.id !== tab.dataset.packageTab;
-      });
-    });
-  });
-
-  document.querySelectorAll<HTMLAnchorElement>("[data-package-choice]").forEach((link) => {
-    link.addEventListener("click", () => {
-      const packageField = document.querySelector<HTMLInputElement>("#package");
-      if (packageField && link.dataset.packageChoice) {
-        packageField.value = link.dataset.packageChoice;
-        packageField.dispatchEvent(new Event("change", { bubbles: true }));
-      }
-    });
-  });
-</script>
 
 <style>
   .hero {
@@ -174,16 +70,6 @@ const live = [
   }
 
   .container { position: relative; }
-
-  .hero-grid {
-    display: grid;
-    gap: clamp(2.5rem, 6vw, 5rem);
-    align-items: start;
-  }
-
-  @media (min-width: 64rem) {
-    .hero-grid { grid-template-columns: minmax(0, 1.35fr) minmax(19rem, 0.65fr); }
-  }
 
   h1 em {
     font-style: normal;
@@ -248,170 +134,6 @@ const live = [
     font-size: var(--step-0);
     color: var(--muted);
   }
-
-  .package-card {
-    background: color-mix(in srgb, var(--surface) 92%, transparent);
-    border: 1px solid var(--rule);
-    border-radius: 8px;
-    box-shadow: 0 1.25rem 4rem color-mix(in srgb, var(--ink) 8%, transparent);
-    overflow: hidden;
-  }
-
-  .package-tabs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .package-tabs button {
-    padding: 0.9rem 1rem;
-    font: inherit;
-    font-weight: 600;
-    color: var(--muted);
-    background: transparent;
-    border: 0;
-    border-bottom: 2px solid transparent;
-    cursor: pointer;
-  }
-
-  .package-tabs button + button { border-left: 1px solid var(--rule); }
-  .package-tabs button[aria-selected="true"] {
-    color: var(--ink);
-    border-bottom-color: var(--accent);
-  }
-
-  #basic-tab[aria-selected="true"] {
-    color: var(--accent);
-    background: color-mix(in srgb, var(--accent) 9%, transparent);
-  }
-
-  .package-panel { padding: clamp(1.25rem, 3vw, 1.75rem); }
-  .package-panel[hidden] { display: none; }
-
-  .package-heading {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    align-items: start;
-  }
-
-  .package-kicker,
-  .list-label {
-    margin: 0;
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  .package-heading h2 {
-    margin: 0.3rem 0 0;
-    font-size: var(--step-2);
-  }
-
-  .price {
-    flex: none;
-    margin: 0;
-    color: var(--muted);
-    font-size: var(--step--1);
-  }
-
-  .price strong {
-    display: block;
-    color: var(--ink);
-    font-size: var(--step-3);
-    line-height: 1;
-  }
-
-  .free-price strong { color: var(--accent); }
-
-  .package-summary {
-    margin-block: 1.25rem;
-    color: var(--muted);
-  }
-
-  .package-meta {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin: 0 0 1.35rem;
-    padding-block: 0.85rem;
-    border-block: 1px solid var(--rule);
-  }
-
-  .package-meta div + div {
-    padding-left: 1rem;
-    border-left: 1px solid var(--rule);
-  }
-
-  .package-meta dt {
-    color: var(--muted);
-    font-size: var(--step--1);
-  }
-
-  .package-meta dd {
-    margin: 0.2rem 0 0;
-    font-weight: 600;
-  }
-
-  .included {
-    display: grid;
-    gap: 0.6rem;
-    margin-block: 0.75rem 1rem;
-    padding: 0;
-    list-style: none;
-  }
-
-  .included li {
-    position: relative;
-    padding-left: 1.45rem;
-    color: var(--muted);
-  }
-
-  .included li::before {
-    content: "✓";
-    position: absolute;
-    left: 0;
-    color: var(--accent);
-    font-weight: 700;
-  }
-
-  .excluded {
-    margin-bottom: 1.25rem;
-    color: var(--muted);
-    font-size: var(--step--1);
-  }
-
-  .choose-package {
-    display: block;
-    padding: 0.75rem 1rem;
-    text-align: center;
-    text-decoration: none;
-    font-weight: 600;
-    color: var(--on-accent);
-    background: var(--accent);
-    border: 1px solid var(--accent);
-    border-radius: 999px;
-    transition: background-color 160ms ease, border-color 160ms ease;
-  }
-
-  .choose-package:hover {
-    color: var(--on-accent);
-    background: var(--accent-hover);
-    border-color: var(--accent-hover);
-  }
-
-  .long-term {
-    margin: 0;
-    padding: 1rem clamp(1.25rem, 3vw, 1.75rem) 1.25rem;
-    color: var(--muted);
-    font-size: var(--step--1);
-    border-top: 1px solid var(--rule);
-    background: color-mix(in srgb, var(--accent) 5%, transparent);
-  }
-
-  .long-term strong { color: var(--ink); }
 
   /* the two store links are the proof in this section — give them a real
      hit area rather than the 17px the mono type alone produced */
